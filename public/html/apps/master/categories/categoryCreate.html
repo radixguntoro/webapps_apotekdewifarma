@@ -1,0 +1,145 @@
+<div class="vs-page-category">
+    <div class="vs-page-body">
+        <!-- <form name="categoryForm" ng-submit="createData(categoryForm.$valid)" id="categoryForm"> -->
+            <div class="grid-x">
+                <div class="large-12 cell align-self-middle">
+                    <div class="vs-box-page-content z-depth-1">
+                        <div class="vs-box-page-header">
+                            <div class="grid-x">
+                                <div class="small-12 cell align-self-middle">
+                                    <div class="vs-page-title middle-left">
+                                        <img src="apps/img/icon/create.png" class="mdi-right">
+                                        <span class="vs-page-title font-bold">Buat Kategori</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-x">
+                            <div class="large-12 cell">
+                                <div class="vs-box-page-body">
+                                    <div class="vs-loading" ng-show="loading">
+                                        <div class="showbox">
+                                            <div class="loader">
+                                                <svg class="circular" viewBox="25 25 50 50">
+                                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-x grid-padding-x">
+                                        <div class="small-12 cell">
+                                            <label for="">Nama Kategori</label>
+                                            <input type="text" placeholder="Nama..." ng-model="category.name" required autocomplete="off" id="category-name">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vs-box-page-footer">
+                            <div class="grid-x">
+                                <div class="small-12 cell text-right">
+                                    <button ui-sref="category-list" class="button vs-flat-button btn-smoke margin-bottom-0 margin-right-8px">Kembali</button>
+                                    <button ng-click="createData()" class="button vs-flat-button btn-success margin-bottom-0" id="btn-save" ng-disabled="category.name ==null">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </form> -->
+        <!-- <button class="button vs-flat-button btn-success margin-bottom-0" ng-click="print()">Simpan</button> -->
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" style="width: 364px;
+position: fixed;
+top: 0;
+z-index: 99;
+height: 100%;
+background: white;
+padding-top: 72px;" class="z-depth-1">
+<div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS MENU</h5></th>
+                </tr>
+                <tr>
+                    <th class="text-center">No.</th>
+                    <th class="text-center">Shortcut</th>
+                    <th class="text-center">Fungsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>[ ctrl + 1 ]</td>
+                    <td>Master Barang</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>[ ctrl + 2 ]</td>
+                    <td>Master Kategori</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>[ ctrl + 3 ]</td>
+                    <td>Master Pengguna</td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td>[ ctrl + 4 ]</td>
+                    <td>Master Supplier</td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>[ alt + 1 ]</td>
+                    <td>Menu Trans. Penjualan</td>
+                </tr>
+                <tr>
+                    <td>6.</td>
+                    <td>[ alt + 2 ]</td>
+                    <td>Menu Trans. Pembelian</td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td>[ alt + 3 ]</td>
+                    <td>Menu Stock Opname</td>
+                </tr>
+                <tr>
+                    <td>8.</td>
+                    <td>[ alt + 4 ]</td>
+                    <td>Menu Retur Penjualan</td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td>[ alt + 5 ]</td>
+                    <td>Menu Retur Pembelian</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="small-12 cell">
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                </tr>
+                <tr>
+                    <th class="text-center">No.</th>
+                    <th class="text-center">Shortcut</th>
+                    <th class="text-center">Fungsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>[ alt + s ]</td>
+                    <td>Simpan Data</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

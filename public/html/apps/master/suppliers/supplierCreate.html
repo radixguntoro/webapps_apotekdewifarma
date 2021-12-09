@@ -1,0 +1,124 @@
+<div class="vs-page-supplier">
+    <div class="vs-page-body">
+        <!-- <form name="supplierForm" ng-submit="createData(supplierForm.$valid)" id="supplierForm"> -->
+            <div class="grid-x">
+                <div class="large-12 cell align-self-middle">
+                    <div class="vs-box-page-content z-depth-1">
+                        <div class="vs-box-page-header">
+                            <div class="grid-x">
+                                <div class="small-12 cell align-self-middle">
+                                    <div class="vs-page-title middle-left">
+                                        <img src="apps/img/icon/create.png" class="mdi-right">
+                                        <span class="vs-page-title font-bold">Buat Supplier</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vs-box-page-body">
+                            <div class="vs-loading" ng-show="loading">
+                                <div class="showbox">
+                                    <div class="loader">
+                                        <svg class="circular" viewBox="25 25 50 50">
+                                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid-x">
+                                <div class="large-12 cell">
+                                    <div class="grid-x grid-padding-x">
+                                        <div class="small-12 cell">
+                                            <label for="">Nama Supplier</label>
+                                            <input type="text" placeholder="Nama awal..." ng-model="supplier.name" id="supplier-name">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <label for="">Alamat</label>
+                                            <input type="text" placeholder="Alamat..." ng-model="supplier.address">
+                                        </div>
+                                        <div class="small-4 cell">
+                                            <label for="">Provinsi</label>
+                                            <input type="text" placeholder="Provinsi..." ng-model="supplier.province">
+                                        </div>
+                                        <div class="small-4 cell">
+                                            <label for="">Kota</label>
+                                            <input type="text" placeholder="Kota..." ng-model="supplier.city">
+                                        </div>
+                                        <div class="small-4 cell">
+                                            <label for="">Kode POS</label>
+                                            <input type="text" placeholder="Kode POS..." ng-model="supplier.zip_code">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <label for="">Email</label>
+                                            <input type="email" placeholder="Email..." ng-model="supplier.email">
+                                        </div>
+                                        <div class="small-4 cell">
+                                            <label for="">Phone 1</label>
+                                            <input type="text" placeholder="Nomor phone 1..." ng-model="supplier.phone_1">
+                                        </div>
+                                        <div class="small-4 cell">
+                                            <label for="">Phone 2</label>
+                                            <input type="text" placeholder="Nomor phone 2..." ng-model="supplier.phone_2">
+                                        </div>
+                                        <div class="small-4 cell">
+                                            <label for="">Phone 3</label>
+                                            <input type="text" placeholder="Nomor phone 3..." ng-model="supplier.phone_3">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <hr>
+                                            <label for="">Status</label>
+                                            <div class="vs-box-radio">
+                                                <div class="grid-x">
+                                                    <div class="small-6 medium-3 large-4 cell middle-left">
+                                                        <label class="radio">
+                                                            <input type="radio" name="status" ng-model="status" value="A" hidden ng-checked="true">
+                                                            <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Aktif
+                                                        </label>
+                                                    </div>
+                                                    <div class="small-6 medium-3 large-4 cell middle-left">
+                                                        <label class="radio">
+                                                            <input type="radio" name="status" ng-model="status" value="N" hidden>
+                                                            <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Tidak Aktif
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vs-box-page-footer">
+                            <div class="grid-x">
+                                <div class="small-12 cell text-right">
+                                    <button ui-sref="supplier-list" class="button vs-flat-button btn-smoke margin-bottom-0 margin-right-8px">Kembali</button>
+                                    <button ng-click="createData()" class="button vs-flat-button btn-success margin-bottom-0" ng-disabled="supplier.name == null">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + s ]</td>
+                        <td>Simpan Data</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

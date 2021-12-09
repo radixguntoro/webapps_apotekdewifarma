@@ -1,0 +1,128 @@
+<div class="vs-page-item">
+    <div class="vs-page-body">
+        <div class="grid-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-1">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/list.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Telusuri Barang</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x">
+                                    <div class="small-12 cell">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-12 cell">
+                                                <input type="text" placeholder="Cari kategori berdasarkan nama, sku dan barcode..." class="margin-bottom-12px" ng-change="searchData()" ng-model="searchText" id="inp-search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-12 cell">
+                                        <table class="vs-table show-for-large margin-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th width="56" class="text-center">No.</th>
+                                                    <th class="text-center" width="125">Kode Barang</th>
+                                                    <th class="text-center">Nama Barang</th>
+                                                    <th width="50">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody dir-paginate="item in data | itemsPerPage:25" total-items="totalItems" current-page="pagination.current">
+                                                <tr>
+                                                    <td>{{ ($index + 1) + (pagination.current - 1) * 25}}.</td>
+                                                    <td>{{ item.sku }}</td>
+                                                    <td>
+                                                        <div class="text-uppercase font-bold">{{ item.name }}</div>
+                                                    </td>
+                                                    <td class="text-center" width="25">
+                                                        <button class="button vs-flat-button btn-secondary btn-small margin-bottom-0 btn-edit btn-icon" ng-toggle="{{$index}}" ng-click="searchSupplier(item)" ng-toggle-group="data" ng-toggle-closeable="true"><i class="mdi mdi-magnify mdi-14px"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-toggled="{{$index}}">
+                                                    <td colspan="8" class="vs-row-detail vs-box-sub-table" style="background: white !important">
+                                                        <div class="vs-loading" ng-show="loadingDetail">
+                                                            <div class="showbox">
+                                                                <div class="loader">
+                                                                    <svg class="circular" viewBox="25 25 50 50">
+                                                                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-x grid-padding-x">
+                                                            <div class="large-12 cell">
+                                                                <table class="vs-table-unit margin-bottom-0">
+                                                                    <tbody>
+                                                                        <tr ng-repeat="supplier in data_supplier">
+                                                                            <td width="163" style="background: #feffb8">Nama Supplier</td>
+                                                                            <td width="10" style="background: #feffb8">:</td>
+                                                                            <td style="background: #feffb8" class="text-uppercase">{{ supplier.supplier_name }}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="data.length < 1">
+                                                    <td class="text-center" colspan="4">Maaf, data masih kosong</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vs-box-page-footer">
+                        <div class="grid-x" ng-hide="loading">
+                            <div class="small-6 cell align-self-middle">
+                                <span>Total: {{ totalItems }}</span>
+                            </div>
+                            <div class="small-6 cell align-self-middle">
+                                <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="/html/apps/history/hisItem/hisItemPagination.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + f ]</td>
+                        <td>Kolom penelusuran barang</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

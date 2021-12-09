@@ -1,0 +1,66 @@
+{
+    "total": 5,
+    "per_page": 10,
+    "current_page": 1,
+    "last_page": 1,
+    "next_page_url": null,
+    "prev_page_url": null,
+    "from": 1,
+    "to": 5,
+    "data": [
+    {
+        "product_id": 5,
+        "product_name": "Urban RB 80",
+        "product_code": "PRD170829100921",
+        "product_image_cover": "59a4da8035a2d-_665x665r_rb-80_07506000787.jpg",
+        "product_discount_selling_price": 1200000,
+        "product_selling_price": 1200000,
+        "product_discount_selling_in_percent": "0.00",
+        "product_discount_wholesale_price": 990000,
+        "product_category": "Sepatu Roda"
+    },
+    {
+        "product_id": 4,
+        "product_name": "Twister X",
+        "product_code": "PRD170829100506",
+        "product_image_cover": "59a4d97593faf-_665x665r_twister_x_077395006g5.jpg",
+        "product_discount_selling_price": 1200000,
+        "product_selling_price": 1200000,
+        "product_discount_selling_in_percent": "0.00",
+        "product_discount_wholesale_price": 990000,
+        "product_category": "Sepatu Roda"
+    },
+    {
+        "product_id": 3,
+        "product_name": "Zetrablade",
+        "product_code": "PRD170829043203",
+        "product_image_cover": "59a48b696246b-_665x665r_zetrablade_07736600741.jpg",
+        "product_discount_selling_price": 1200000,
+        "product_selling_price": 1200000,
+        "product_discount_selling_in_percent": "0.00",
+        "product_discount_wholesale_price": 990000,
+        "product_category": "Sepatu Roda"
+    },
+    {
+        "product_id": 2,
+        "product_name": "Tempest 100 W",
+        "product_code": "PRD170829042105",
+        "product_image_cover": "59a488ca08acb-_665x665r_tempest_100_w_07733500944.jpg",
+        "product_discount_selling_price": 1200000,
+        "product_selling_price": 1200000,
+        "product_discount_selling_in_percent": "0.00",
+        "product_discount_wholesale_price": 990000,
+        "product_category": "Sepatu Roda"
+    },
+    {
+        "product_id": 1,
+        "product_name": "Macroblade 90",
+        "product_code": "PRD170829031343",
+        "product_image_cover": "59a477fa582b0-_665x665r_macroblade_90_077342001a1.jpg",
+        "product_discount_selling_price": 1200000,
+        "product_selling_price": 1200000,
+        "product_discount_selling_in_percent": "0.00",
+        "product_discount_wholesale_price": 990000,
+        "product_category": "Sepatu Roda"
+    }]
+}

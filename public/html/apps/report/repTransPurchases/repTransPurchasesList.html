@@ -1,0 +1,264 @@
+<div class="vs-page-history" zurbinit>
+    <div class="vs-page-body">
+        <div class="grid-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-1">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/graph.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Laporan Pembelian</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x align-center">
+                                    <div class="small-3 cell margin-bottom-8px">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-12 cell">
+                                                <label for="">Tanggal Awal</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-label"><i class="mdi mdi-calendar"></i></span>
+                                                    <input type="text" ui-date="dateReportOptions" name="dateReportStart" ng-model="report.datestart" placeholder="01-01-2018" autocomplete="off" id="inp-datestart">
+                                                </div>
+                                            </div>
+                                            <div class="small-12 cell">
+                                                <label for="">Tanggal Akhir</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-label"><i class="mdi mdi-calendar"></i></span>
+                                                    <input type="text" ui-date="dateReportOptions" name="dateReportEnd" ng-model="report.dateend" placeholder="31-01-2018" autocomplete="off" id="inp-dateend">
+                                                </div>
+                                            </div>
+                                            <div class="small-12 cell font-bold text-right align-self-middle">
+                                                <button class="button vs-flat-button btn-secondary btn-small margin-top-12px" ng-click="filterData(this, report)">Cari</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-9 cell">
+                                        <div class="sticky-table sticky-headers sticky-ltr-cells" stickytable>
+                                            <table class="vs-table show-for-large margin-bottom-0">
+                                                <thead>
+                                                    <tr class="sticky-row">
+                                                        <th width="48" class="text-center sticky-cell">No.</th>
+                                                        <th width="100" class="text-center sticky-cell">Tanggal</th>
+                                                        <!-- <th class="text-center sticky-cell" width="150">Admin</th> -->
+                                                        <!-- <th class="text-center sticky-cell">Supplier</th> -->
+                                                        <th width="115" class="text-center sticky-cell">No. Faktur</th>
+														<th class="text-center sticky-cell">Supplier</th>
+                                                        <th width="150" class="text-center sticky-cell">Total Harga</th>
+                                                        <th width="125" class="text-center sticky-cell">Diskon</th>
+                                                        <th width="80" class="text-center sticky-cell">PPN (%)</th>
+                                                        <th width="175" class="text-center sticky-cell">Grand Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody ng-repeat="report_trans_purchases in data">
+                                                    <tr ng-click="showTransPurchasesDetail(report_trans_purchases)" ng-toggle="{{$index}}" ng-toggle-group="data" ng-toggle-closeable="true" class="vs-row-click">
+                                                        <td>{{ $index + 1}}.</td>
+                                                        <td>
+                                                            {{ report_trans_purchases.date_input | date : "dd MMM y" }}
+                                                        </td>
+                                                        <!-- <td class="text-center">{{ report_trans_purchases.first_name }} {{ report_trans_purchases.last_name }}</td> -->
+                                                        <td>
+                                                            {{ report_trans_purchases.code }}
+                                                            <div style="color: #3f51b5; font-weight: bold; font-size: 13px; font-style: italic">
+                                                                {{ report_trans_purchases.invoice }}
+                                                            </div>
+                                                        </td>
+														<td class="text-uppercase">{{ report_trans_purchases.supplier_name }}</td>
+                                                        <td class="text-right">{{ report_trans_purchases.total_price | currency:'':0 }}</td>
+                                                        <td class="text-right">{{ report_trans_purchases.disc_total | currency:'':0 }}</td>
+                                                        <td class="text-center">
+                                                            <label class="label success text-white" ng-if="report_trans_purchases.ppn > 0">Ya</label>
+                                                            <label class="label alert text-white" ng-if="report_trans_purchases.ppn == 0.00">Tidak</label>
+                                                        </td>
+                                                        <td class="text-right">{{ report_trans_purchases.grand_total | currency:'':0 }}</td>
+                                                    </tr>
+                                                    <tr ng-toggled="{{$index}}">
+                                                        <td colspan="9" class="vs-row-detail vs-box-sub-table" style="padding: 0 !important; background: white !important;">
+                                                            <div class="vs-loading" ng-show="loadingDetail">
+                                                                <div class="showbox">
+                                                                    <div class="loader">
+                                                                        <svg class="circular" viewBox="25 25 50 50">
+                                                                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid-x" zurbinit>
+                                                                <div class="medium-12 cell">
+                                                                    <div class="callout primary margin-bottom-0 no-border padding-0">
+                                                                        <div class="grid-x">
+                                                                            <div class="small-6 cell" style="background: #50c36c; padding: 0 16px; color: white">
+                                                                                <div class="grid-x">
+                                                                                    <div class="large-1 cell">
+                                                                                        <i class="mdi mdi-account-circle mdi-36px"></i>
+                                                                                    </div>
+                                                                                    <div class="large-11 cell">
+                                                                                        <div class="font-bold margin-top-8px padding-left-1 text-uppercase">{{ report_trans_purchases.first_name }} {{ report_trans_purchases.last_name }}</div>
+                                                                                        <div class="font-italic padding-left-1">Pengguna</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="small-6 cell" style="background: #e4c05c; padding: 0 16px; color: white">
+                                                                                <div class="grid-x">
+                                                                                    <div class="large-1 cell">
+                                                                                        <i class="mdi mdi-hospital-building mdi-36px"></i>
+                                                                                    </div>
+                                                                                    <div class="large-11 cell">
+                                                                                        <div class="font-bold margin-top-8px padding-left-1 text-uppercase">{{ report_trans_purchases.supplier_name }}</div>
+                                                                                        <div class="font-italic padding-left-1">Supplier</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="medium-12 cell">
+                                                                    <div class="padding-1">
+                                                                        <button class="vs-flat-button btn-small button z-depth-1 float-right" ui-sref="transaction-purchases-edit({id: report_trans_purchases.id})">Ubah</button>
+                                                                        <button class="vs-flat-button btn-small button z-depth-1 alert float-right  margin-right-8px" data-toggle="confirm-delete-purchases-{{report_trans_purchases.id}}">Hapus</button>
+																		<div class="reveal" id="confirm-delete-purchases-{{report_trans_purchases.id}}" data-reveal data-close-on-click="true" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
+																			<h5><span style="color: #cc4b37" class="font-bold">PERINGATAN!</span></h5>
+																			<hr>
+																			<h5 class="text-center">Apakah anda yakin akan menghapus data <span style="color: #cc4b37" class="font-bold">Pembelian?</span></h5>
+																			<hr>
+																			<button class="close-button" data-close aria-label="Close reveal" type="button">
+																				<span aria-hidden="true">&times;</span>
+																			</button>
+																			<button data-close ng-click="deleteData({id: report_trans_purchases.id})" class="button vs-flat-button alert margin-bottom-0 float-right">Hapus Sekarang</button>
+																		</div>
+                                                                        <table class="margin-bottom-0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="text-center">Nama Barang</th>
+                                                                                    <th class="text-center" width="200">Harga</th>
+                                                                                    <th class="text-center" width="100">Kuantitas</th>
+                                                                                    <th class="text-center" width="200">Subtotal</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="trans_detail in trans_purchases_detail">
+                                                                                    <td>
+                                                                                        <span class="text-uppercase font-bold">{{ trans_detail.name }}</span>
+                                                                                        <p class="margin-bottom-0">Satuan: <span class="text-capitalize">{{ trans_detail.unit }}</span></p>
+                                                                                    </td>
+                                                                                    <td class="text-right">{{ trans_detail.price_sell | currency:'':0; }}</td>
+                                                                                    <td class="text-right">{{ trans_detail.qty }}</td>
+                                                                                    <td class="text-right">{{ trans_detail.subtotal | currency:'':0; }}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="3" class="text-right font-bold">Total Harga</td>
+                                                                                    <td class="text-right">{{ report_trans_purchases.total_price | currency:'':0; }}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="3" class="text-right font-bold">Diskon</td>
+                                                                                    <td class="text-right">
+                                                                                        <span ng-if="report_trans_purchases.disc_total > 0">
+                                                                                            {{ report_trans_purchases.disc_total | currency:'':0; }}
+                                                                                        </span>
+                                                                                        <span ng-if="report_trans_purchases.disc_total == 0">
+                                                                                            0
+                                                                                        </span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="3" class="text-right font-bold">Total Harga Akhir</td>
+                                                                                    <td class="text-right font-bold" style="border-top: 2px solid #ddd;">{{ report_trans_purchases.total_price - report_trans_purchases.disc_total | currency:'':0; }}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="3" class="text-right font-bold">PPN (%)</td>
+                                                                                    <td class="text-right" style="border-bottom: 2px solid #ddd;">{{ report_trans_purchases.ppn | currency:'':0 }}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="3" class="text-right font-bold">Grand Total</td>
+                                                                                    <td class="text-right">
+                                                                                        <h4 class="font-bold">{{ report_trans_purchases.grand_total | currency:'':0; }}</h4>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody ng-show="data.length < 1">
+                                                    <tr>
+                                                        <td class="text-center" colspan="9">Maaf, data tidak ditemukan</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <table ng-show="data.length > 0" class="margin-bottom-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-right font-bold">Total Pembelian</td>
+                                                    <td class="text-right font-bold" style="border-top: 2px solid #ddd; background: #dcdcfb">{{ totalTransPurchases | currency:'':0; }}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-right font-bold">Retur</td>
+                                                    <td class="text-right" width="175">{{ totalReturnPurchases | currency:'':0; }}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-right font-bold">Total Akhir Pembelian</td>
+                                                    <td class="text-right font-bold" style="border-top: 2px solid #ddd; background: #fdfdbe" width="206"> <h4 class="font-bold">{{ (totalTransPurchases - totalReturnPurchases) | currency:'':0; }}</h4></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + s ]</td>
+                        <td>Kolom Tanggal Awal</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + e ]</td>
+                        <td>Kolom Tanggal Akhir</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + f ]</td>
+                        <td>Tombol Cari</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

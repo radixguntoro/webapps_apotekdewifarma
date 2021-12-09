@@ -1,0 +1,45 @@
+$small-width: 40em;
+$medium-width: 64em;
+$large-width: 90em;
+
+@mixin phone {
+	@media screen and (max-width: 39.9375em)  {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+	@media screen and (min-width: 40em) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: 64em) {
+    @content;
+  }
+}
+
+@mixin retina {
+  @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
+@mixin print {
+  @media print {
+    @content;
+  }
+}

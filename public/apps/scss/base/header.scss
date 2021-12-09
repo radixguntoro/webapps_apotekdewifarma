@@ -1,0 +1,57 @@
+.vs-header {
+    width     : 100%;
+    color     : white;
+    background: white;
+    z-index   : 999;
+}
+
+.vs-logo {
+    padding : 9px 0;
+    position: relative;
+
+    img {
+        position: absolute;
+        top     : 0;
+        left    : 0;
+    }
+
+    h4 {
+        margin-bottom: 0;
+    }
+}
+
+.vs-menu {
+    li {
+        a {
+            img {
+                width: 32px;
+            }
+            color    : $color-black;
+            font-size: 15px;
+        }
+    }
+}
+
+.vs-account {
+    height: 100%;
+
+    li {
+        a {
+            padding: 0;
+
+            img {
+                width: 40px;
+            }
+        }
+    }
+}
+
+.vs-submenu {
+    padding-top   : 8px;
+    padding-bottom: 8px;
+    border        : 0;
+
+    li {
+        a {}
+    }
+}

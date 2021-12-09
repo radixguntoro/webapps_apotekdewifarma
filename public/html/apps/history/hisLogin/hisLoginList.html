@@ -1,0 +1,129 @@
+<div class="vs-page-history">
+    <div class="vs-page-body">
+        <div class="grid-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-1">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/log.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Riwayat Pengguna</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x">
+                                    <div class="small-3 cell margin-bottom-8px">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-12 cell">
+                                                <label for="">Tanggal Awal</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-label"><i class="mdi mdi-calendar"></i></span>
+                                                    <input type="text" ui-date="dateReportOptions" name="dateReportStart" ng-model="report.datestart" placeholder="01-08-2018" autocomplete="off" id="inp-datestart">
+                                                </div>
+                                            </div>
+                                            <div class="small-12 cell">
+                                                <label for="">Tanggal Akhir</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-label"><i class="mdi mdi-calendar"></i></span>
+                                                    <input type="text" ui-date="dateReportOptions" name="dateReportEnd" ng-model="report.dateend" placeholder="31-08-2018" autocomplete="off" id="inp-dateend">
+                                                </div>
+                                            </div>
+                                            <div class="small-12 cell font-bold text-right align-self-middle">
+                                                <button class="button vs-flat-button btn-secondary btn-small margin-bottom-0 margin-top-12px" ng-click="filterData()">Cari</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-9 cell">
+                                        <div class="sticky-table sticky-headers sticky-ltr-cells" stickytable style="max-height: 451px">
+                                            <table class="vs-table show-for-large margin-bottom-0">
+                                                <thead>
+                                                    <tr class="sticky-row">
+                                                        <th width="56" class="text-center sticky-cell">&nbsp;</th>
+                                                        <th width="160" class="text-center sticky-cell">Waktu</th>
+                                                        <th width="100" class="text-center sticky-cell">NIK</th>
+                                                        <th width="180" class="text-center sticky-cell">Nama</th>
+                                                        <th class="text-center sticky-cell">Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody dir-paginate="history_login in data | itemsPerPage:25" total-items="totalItems" current-page="pagination.current">
+                                                    <tr>
+                                                        <td>{{ ($index + 1) + (pagination.current - 1) * 25}}.</td>
+                                                        <td>
+                                                            {{ history_login.date | date : "dd MMM y" }}
+                                                            {{ history_login.time | date : "mediumTime" }}
+                                                        </td>
+                                                        <td>{{ history_login.nik }}</td>
+                                                        <td>{{ history_login.first_name }} {{ history_login.last_name }}</td>
+                                                        <td>{{ history_login.action }}</td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody ng-show="data.length < 1">
+                                                    <tr>
+                                                        <td class="text-center" colspan="6">Maaf, data tidak ditemukan</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vs-box-page-footer">
+                        <div class="grid-x" ng-hide="loading">
+                            <div class="small-6 cell align-self-middle">
+                                <span>Total: {{ totalItems }}</span>
+                            </div>
+                            <div class="small-6 cell align-self-middle">
+                                <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="/html/apps/history/hisLogin/hisLoginPagination.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + s ]</td>
+                        <td>Kolom Tanggal Awal</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + e ]</td>
+                        <td>Kolom Tanggal Akhir</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + f ]</td>
+                        <td>Tombol Cari</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

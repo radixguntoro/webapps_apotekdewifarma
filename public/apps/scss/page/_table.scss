@@ -1,0 +1,147 @@
+.vs-box-table {
+    position  : relative;
+    min-height: 500px;
+}
+
+table {
+    font-size: 14px;
+
+    thead {
+        border: 1px solid #e0e0e0;
+
+        tr {
+            background: lighten(black, 88%);
+
+            th {
+                @extend .font-bold;
+                border : 1px solid transparent;
+                padding: 4px 8px;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                padding       : 4px 8px;
+                border        : 1px solid lighten(black, 88%);
+                vertical-align: top;
+            }
+        }
+    }
+}
+
+.vs-table-unit {
+    thead {
+        tr {
+            background: lighten(black, 88%);
+
+            th {
+                @extend .font-bold;
+                border : 1px solid $color-grey;
+                padding: 8px;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                padding       : 8px;
+                border        : 1px solid lighten(black, 88%);
+                vertical-align: top;
+            }
+        }
+    }
+}
+
+.vs-box-sub-table {
+    background: white;
+    position  : relative;
+    min-height: 100px !important;
+    padding   : 0;
+}
+
+.vs-row-detail {
+    border    : 1px solid lighten(black, 88%) !important;
+    background: $color-smoke !important;
+}
+
+.vs-row-click {
+    &:hover {
+        background: $color-smoke;
+        cursor    : pointer;
+    }
+}
+
+table {
+    tbody {
+        tr {
+            td {
+                [type='text'],
+                [type='password'],
+                [type='date'],
+                [type='datetime'],
+                [type='datetime-local'],
+                [type='month'],
+                [type='week'],
+                [type='email'],
+                [type='number'],
+                [type='search'],
+                [type='tel'],
+                [type='time'],
+                [type='url'],
+                [type='color'],
+                textarea {
+                    height: 32px;
+                }
+            }
+        }
+    }
+}
+
+.pagination {
+    margin-bottom: 0;
+
+    li {
+        width       : 32px;
+        height      : 32px;
+        margin-left : 4px;
+        margin-right: 4px;
+        border      : 1px solid $color-grey;
+
+        a {
+            @extend .middle-center;
+            height: 100%;
+        }
+    }
+}
+
+.pagination .current {
+    padding: 0;
+    width  : 32px;
+    height : 32px;
+    @extend .middle-center;
+
+    &:hover {
+        background: $color-primary;
+    }
+}
+
+.vs-sticky-table {
+    height    : 470px;
+    overflow-x: auto;
+
+    .sticky-header {
+        position: fixed;
+    }
+}
+
+.sticky-table {
+    max-height: 390px;
+    overflow-x: auto;
+
+    .sticky-header {
+        position: fixed;
+    }
+}

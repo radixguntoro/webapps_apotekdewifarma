@@ -1,0 +1,207 @@
+<div class="vs-page-history">
+    <div class="vs-page-body">
+        <div class="grid-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-1">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/graph.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Daftar Penjualan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-padding-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x align-center">
+                                    <div class="small-3 cell margin-bottom-8px">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-12 cell">
+                                                <label for="">Tanggal Awal</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-label"><i class="mdi mdi-calendar"></i></span>
+                                                    <input type="text" ui-date="dateReportOptions" name="dateReportStart" ng-model="report.datestart" placeholder="01-01-2018" autocomplete="off" id="inp-datestart">
+                                                </div>
+                                            </div>
+                                            <div class="small-12 cell">
+                                                <label for="">Tanggal Akhir</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-label"><i class="mdi mdi-calendar"></i></span>
+                                                    <input type="text" ui-date="dateReportOptions" name="dateReportEnd" ng-model="report.dateend" placeholder="01-02-2018" autocomplete="off" id="inp-dateend">
+                                                </div>
+                                            </div>
+                                            <div class="small-12 cell font-bold text-right align-self-middle">
+                                                <button class="button vs-flat-button btn-secondary btn-small margin-top-12px" ng-click="filterData(this, report)">Cari</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-9 cell">
+                                        <div class="sticky-table sticky-headers sticky-ltr-cells" stickytable>
+                                            <table class="vs-table show-for-large margin-bottom-0">
+                                                <thead>
+                                                    <tr class="sticky-row">
+                                                        <th width="48" class="text-center sticky-cell">No.</th>
+                                                        <th width="155" class="text-center sticky-cell">Tanggal</th>
+                                                        <th class="text-center sticky-cell">Admin</th>
+                                                        <th width="125" class="text-center sticky-cell">No. Faktur</th>
+                                                        <!-- <th width="125" class="text-center sticky-cell">Diskon (%)</th>
+                                                        <th width="125" class="text-center sticky-cell">Diskon Tunai</th> -->
+                                                        <th width="150" class="text-center sticky-cell">Total Bayar</th>
+                                                        <th width="150" class="text-center sticky-cell">Total Kembali</th>
+                                                        <th width="185" class="text-center sticky-cell">Grand Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody dir-paginate="report_trans_sales in data | itemsPerPage:25" total-items="totalItems" current-page="pagination.current">
+                                                    <tr ng-click="showTransSalesDetail(report_trans_sales)" ng-toggle="{{$index}}" ng-toggle-group="data" ng-toggle-closeable="true" class="vs-row-click">
+                                                        <td>{{$index + 1}}.</td>
+                                                        <td>
+                                                            {{ report_trans_sales.date | date : "dd MMM y" }}
+                                                            {{ report_trans_sales.time }}
+                                                        </td>
+                                                        <td class="text-center">{{ report_trans_sales.first_name }} {{ report_trans_sales.last_name }}</td>
+                                                        <td>{{ report_trans_sales.code }}</td>
+                                                        <!-- <td class="text-right">{{ report_trans_sales.discount * 100 }} %</td>
+                                                        <td class="text-right">{{ report_trans_sales.discount_price | currency:'':0 }}</td> -->
+                                                        <td class="text-right">{{ report_trans_sales.payment | currency:'':0 }}</td>
+                                                        <td class="text-right">{{ report_trans_sales.balance | currency:'':0 }}</td>
+                                                        <td class="text-right">{{ report_trans_sales.grand_total | currency:'':0 }}</td>
+                                                    </tr>
+                                                    <tr ng-toggled="{{$index}}">
+                                                        <td colspan="7" class="vs-row-detail vs-box-sub-table" style="padding: 0 !important; background: white !important;">
+                                                            <div class="vs-loading" ng-show="loadingDetail">
+                                                                <div class="showbox">
+                                                                    <div class="loader">
+                                                                        <svg class="circular" viewBox="25 25 50 50">
+                                                                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid-x">
+                                                                <div class="medium-12 cell">
+                                                                    <div class="callout primary margin-bottom-0 no-border">
+                                                                        <h5 class="font-bold">Rincian Transaksi</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="medium-12 cell">
+                                                                    <div class="padding-1">
+                                                                        <table class="margin-bottom-0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="text-center">Nama Barang</th>
+                                                                                    <th class="text-center" width="200">Harga</th>
+                                                                                    <th class="text-center" width="100">Kuantitas</th>
+                                                                                    <th class="text-center" width="150">Diskon (%)</th>
+                                                                                    <th class="text-center" width="200">Subtotal</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="trans_detail in trans_sales_detail">
+                                                                                    <td>
+                                                                                        <span class="text-uppercase font-bold">{{ trans_detail.name }}</span>
+                                                                                        <p class="margin-bottom-0">Satuan: <span class="text-capitalize">
+                                                                                            <span ng-if="trans_detail.unit =='box'">Box</span>
+                                                                                            <span ng-if="trans_detail.unit =='strip'">Strip</span>
+                                                                                            <span ng-if="trans_detail.unit =='tablet'">Biji</span>
+                                                                                        </span></p>
+                                                                                    </td>
+                                                                                    <td class="text-right">{{ trans_detail.price | currency:'':0; }}</td>
+                                                                                    <td class="text-right">{{ trans_detail.qty }}</td>
+                                                                                    <td class="text-right">{{ trans_detail.discount * 100 }}%</td>
+                                                                                    <td class="text-right">{{ trans_detail.subtotal | currency:'':0; }}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="4" class="text-right font-bold">Total Harga</td>
+                                                                                    <td class="text-right">{{ report_trans_sales.total_price | currency:'':0; }}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="4" class="text-right font-bold">Diskon Tunai</td>
+                                                                                    <td class="text-right">{{ report_trans_sales.discount_price | currency:'':0 }}</td>
+
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="4" class="text-right font-bold">Diskon (%)</td>
+                                                                                    <td class="text-right">{{ report_trans_sales.discount * 100 }} %</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="4" class="text-right font-bold">Grand Total</td>
+                                                                                    <td class="text-right" style="border-top: 2px solid #ddd; background: #dcdcfb">
+                                                                                        <h4 class="font-bold">{{ report_trans_sales.grand_total | currency:'':0; }}</h4>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody ng-show="data.length < 1">
+                                                    <tr>
+                                                        <td class="text-center" colspan="9">Maaf, data tidak ditemukan</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vs-box-page-footer">
+                        <div class="grid-x" ng-hide="loading">
+                            <div class="small-6 cell align-self-middle">
+                                <span>Total: {{ totalItems }}</span>
+                            </div>
+                            <div class="small-6 cell align-self-middle">
+                                <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="/html/apps/transaction/transactionSales/transactionSalesPagination.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + s ]</td>
+                        <td>Kolom Tanggal Awal</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + e ]</td>
+                        <td>Kolom Tanggal Akhir</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + f ]</td>
+                        <td>Tombol Cari</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

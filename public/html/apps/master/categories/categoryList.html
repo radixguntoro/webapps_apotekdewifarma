@@ -1,0 +1,178 @@
+<div class="vs-page-category">
+    <div class="vs-page-body">
+        <div class="grid-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-1">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-10 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/list.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Daftar Kategori</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x">
+                                    <div class="small-12 cell">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-2 cell">
+                                                <button ui-sref="category-create" class="button float-right btn-small vs-flat-button btn-secondary middle-center margin-bottom-0 expanded">Tambah</button>
+                                            </div>
+                                            <div class="small-10 cell">
+                                                <input type="text" placeholder="Cari kategori berdasarkan nama..." class="margin-bottom-12px" ng-change="searchData()" ng-model="searchText" id="inp-search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-12 cell">
+                                        <table class="vs-table show-for-large margin-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th width="56" class="text-center">No.</th>
+                                                    <th class="text-center">Nama Kategori</th>
+                                                    <th width="50">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr dir-paginate="category in data | itemsPerPage:25" total-items="totalItems" current-page="pagination.current">
+                                                    <td>{{ ($index + 1) + (pagination.current - 1) * 25}}.</td>
+                                                    <td>{{ category.name }}</td>
+                                                    <td class="text-center">
+                                                        <button ui-sref="category-edit({id: category.id})" class="button vs-flat-button primary btn-small btn-square margin-bottom-0 btn-edit btn-icon" ng-keypress="pressEdit(this, $event, item.id)"><i class="mdi mdi-pencil mdi-14px"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="data.length < 1">
+                                                    <td class="text-center" colspan="3">Maaf, data masih kosong</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vs-box-page-footer">
+                        <div class="grid-x" ng-hide="loading">
+                            <div class="small-6 cell align-self-middle">
+                                <span>Total: {{ totalItems }}</span>
+                            </div>
+                            <div class="small-6 cell align-self-middle">
+                                <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="/html/apps/master/categories/categoryPagination.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" style="width: 364px;
+position: fixed;
+top: 0;
+z-index: 99;
+height: 100%;
+background: white;
+padding-top: 72px;" class="z-depth-1">
+<div class="grid-x grid-padding-x">
+    <div class="small-12 cell">
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS MENU</h5></th>
+                </tr>
+                <tr>
+                    <th class="text-center">No.</th>
+                    <th class="text-center">Shortcut</th>
+                    <th class="text-center">Fungsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>[ ctrl + 1 ]</td>
+                    <td>Master Barang</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>[ ctrl + 2 ]</td>
+                    <td>Master Kategori</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>[ ctrl + 3 ]</td>
+                    <td>Master Pengguna</td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td>[ ctrl + 4 ]</td>
+                    <td>Master Supplier</td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td>[ alt + 1 ]</td>
+                    <td>Menu Trans. Penjualan</td>
+                </tr>
+                <tr>
+                    <td>6.</td>
+                    <td>[ alt + 2 ]</td>
+                    <td>Menu Trans. Pembelian</td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td>[ alt + 3 ]</td>
+                    <td>Menu Stock Opname</td>
+                </tr>
+                <tr>
+                    <td>8.</td>
+                    <td>[ alt + 4 ]</td>
+                    <td>Menu Retur Penjualan</td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td>[ alt + 5 ]</td>
+                    <td>Menu Retur Pembelian</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="small-12 cell">
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                </tr>
+                <tr>
+                    <th class="text-center">No.</th>
+                    <th class="text-center">Shortcut</th>
+                    <th class="text-center">Fungsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>[ alt + f ]</td>
+                    <td>Kolom pencarian barang</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>[ alt + t ]</td>
+                    <td>Tambah Data Baru</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

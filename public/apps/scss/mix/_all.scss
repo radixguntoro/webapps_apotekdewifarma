@@ -1,0 +1,256 @@
+.text-bold {
+    font-weight: bold;
+}
+
+.text-normal {
+    font-weight: normal;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-italic {
+    font-style: italic;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-lowercase {
+    text-transform: lowercase;
+}
+
+.text-black {
+    color: $color-black !important;
+}
+
+.text-red {
+    color: $color-red !important;
+}
+
+.text-blue {
+    color: $color-blue !important;
+}
+
+.vs-text-nothing {
+    font-size: 14px;
+    color: lighten($color-black, 34%);
+    font-weight: normal;
+    font-style: italic;
+}
+
+.border-right-1 {
+    border-right: 1px solid white;
+}
+
+.border-left-1 {
+    border-left: 1px solid white;
+}
+
+.grid-padding-x {
+    @include phone {
+        .cell {
+            padding-right: 16px;
+            padding-left: 16px;
+        }
+    }
+}
+
+
+.margin-top {
+    margin-top: .9375rem;
+}
+
+.margin-bottom {
+    margin-bottom: .9375rem;
+}
+
+.hide {
+    display: none !important;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Lato', sans-serif;
+    color: $color-black;
+    background: white;
+}
+
+h1 {
+    font-size: 32px;
+    @include tablet {
+        font-size: 28px;
+    }
+    @include phone {
+        font-size: 1.248em;
+    }
+}
+
+h2 {
+    font-size: 28px;
+    @include tablet {
+        font-size: 26px;
+    }
+    @include phone {
+        font-size: 1.248em;
+    }
+}
+
+h3 {
+    font-size: 24px;
+    @include tablet {
+        font-size: 22px;
+    }
+    @include phone {
+        font-size: 20px;
+    }
+}
+
+h4 {
+    font-size: 20px;
+    @include tablet {
+        font-size: 18px;
+    }
+    @include phone {
+        font-size: 0.998em;
+    }
+}
+
+h5 {
+    font-size: 18px;
+    @include tablet {
+        font-size: 16px;
+    }
+    @include phone {
+        font-size: 14px;
+    }
+}
+
+h6 {
+    font-size: 14px;
+    @include tablet {
+        font-size: 22px;
+    }
+}
+
+p {
+    font-size: 16px;
+    @include tablet {
+        font-size: 14px;
+    }
+    @include phone {
+        font-size: 0.874em;
+        line-height: 24px;
+    }
+}
+
+.fullwidth {
+    width: 100%;
+    max-width: none;
+    .columns {
+        padding: 0;
+    }
+}
+
+.fa-no-gutter {
+    margin: 0 !important;
+}
+
+
+
+
+
+
+
+
+
+
+// END SELECTIZE
+.vs-section {
+    padding-bottom: 40px;
+}
+
+.vs-section-title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.vs-hr-carousel-title {
+    width: 50px;
+    border-width: 3px;
+    margin: 0.5rem auto;
+    border-color: $color-grey;
+}
+
+.vs-menu-cell {
+    &:nth-child(1n+1) {
+        a {
+            border-right: 0 !important;
+        }
+    }
+    &:last-child {
+        a {
+            border-right: 1px solid lighten($color-grey, 5%) !important;
+        }
+    }
+}
+
+.vs-modal-footer {
+    margin-top: 0;
+    padding: 0;
+    .vs-box-modal-btn {
+        padding-top: 16px;
+        .button {
+            margin-bottom: 0;
+        }
+    }
+}
+
+ul.pagination {
+    li.disabled {}
+    li.active {
+        padding: 2px 10px;
+        background: $color-black;
+        span {
+            color: white;
+        }
+    }
+}
+
+.media-object-section:last-child:not(:nth-child(2)) {
+    padding-left: 0;
+}
+
+
+
+// Input
+[type=color],
+[type=date],
+[type=datetime-local],
+[type=datetime],
+[type=email],
+[type=month],
+[type=number],
+[type=password],
+[type=search],
+[type=tel],
+[type=text],
+[type=time],
+[type=url],
+[type=week],
+textarea,
+select {
+    background: transparent;
+    box-shadow: none;
+}

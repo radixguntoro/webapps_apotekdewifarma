@@ -1,0 +1,80 @@
+<table>
+    <thead>
+        <tr>
+            <th class="text-center" colspan="6"><h5 class="font-bold margin-0">HOTKEYS MENU</h5></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2" class="font-bold" ng-if="user_id == 99 || user_id == 0 || user_id == 2">Master</td>
+            <td colspan="2" class="font-bold" ng-if="user_id == 99 || user_id == 0">Laporan</td>
+            <td colspan="2" class="font-bold" ng-if="user_id == 99 || user_id == 0">Tutup Kasir</td>
+        </tr>
+        <tr>
+            <td width="80" ng-if="user_id == 99 || user_id == 0 || user_id == 2">[ ctrl + 1 ]</td>
+            <td width="150" ng-if="user_id == 99 || user_id == 0 || user_id == 2">Master Barang</td>
+            <td width="120" ng-if="user_id == 99 || user_id == 0">[ ctrl + 4 ]</td>
+            <td width="150" ng-if="user_id == 99 || user_id == 0 || user_id == 2">Lap. Pembelian</td>
+            <td width="80" ng-if="user_id == 99 || user_id == 0">[ alt + 6 ]</td>
+            <td width="150" ng-if="user_id == 99 || user_id == 0">Tutup Kasir</td>
+        </tr>
+        <tr>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + 2 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Master Pengguna</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + 5 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Lap. Penjualan</td>
+            <td rowspan="2" colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + 3 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Master Supplier</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + 6 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Lap. Stock Opname</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="font-bold">Transaksi</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + 7 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Lap. Kartu Barang</td>
+            <td colspan="2" class="font-bold">Logout</td>
+        </tr>
+        <tr>
+            <td>[ alt + 1 ]</td>
+            <td>Trans. Penjualan</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + 8 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Lap. Storan Kasir</td>
+            <td>[ alt + shift + q ]</td>
+            <td>Keluar Akun</td>
+        </tr>
+        <tr>
+            <td ng-if="user_id == 99 || user_id == 0 || user_id == 2">[ alt + 2 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0 || user_id == 2">Trans. Pembelian</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + 9 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Lap. Setoran per Shift</td>
+        </tr>
+        <tr>
+            <td colspan="2" class="font-bold" ng-if="user_id == 99 || user_id == 0 || user_id == 2">Inventori</td>
+            <td colspan="4" class="font-bold" ng-if="user_id == 99 || user_id == 0">Riwayat</td>
+        </tr>
+        <tr>
+            <td ng-if="user_id == 99 || user_id == 0">[ alt + 3 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Stock Opname</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + shift + 1 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Riwayat Penjualan</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + shift + 4 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Riwayat Pengguna</td>
+        </tr>
+        <tr>
+            <td>[ alt + 4 ]</td>
+            <td>Retur Penjualan</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + shift + 2 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Riwayat Pembelian</td>
+            <td rowspan="2" colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td ng-if="user_id == 99 || user_id == 0 || user_id == 2">[ alt + 5 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0 || user_id == 2">Retur Pembelian</td>
+            <td ng-if="user_id == 99 || user_id == 0">[ ctrl + shift + 3 ]</td>
+            <td ng-if="user_id == 99 || user_id == 0">Riwayat Stock Opname</td>
+        </tr>
+    </tbody>
+</table>

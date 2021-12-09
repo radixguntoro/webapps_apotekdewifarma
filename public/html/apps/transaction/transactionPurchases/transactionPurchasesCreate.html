@@ -1,0 +1,419 @@
+<div class="vs-page-transaction" zurbinit>
+    <div class="vs-page-body">
+        <!-- <form name="transactionPurchasesForm" ng-submit="createData(transactionPurchasesForm.$valid)" id="transactionPurchasesForm"> -->
+            <div class="grid-x">
+                <div class="large-12 cell align-self-middle">
+                    <div class="vs-box-page-content z-depth-2">
+                        <div class="vs-box-page-header">
+                            <div class="grid-x">
+                                <div class="small-12 medium-6 large-3 cell align-self-middle">
+                                    <div class="vs-page-title middle-left">
+                                        <img src="apps/img/icon/cashier.png" class="mdi-right">
+                                        <span class="vs-page-title font-bold">Transaksi Pembelian</span>
+                                    </div>
+                                </div>
+                                <div class="small-12 medium-6 large-9 cell align-self-right text-right">
+                                    {{ todayDate | date : "d MMM y" }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-x">
+                            <div class="large-12 cell">
+                                <div class="vs-box-page-body vs-bg-smoke padding-bottom-1">
+                                    <div class="grid-x grid-padding-x">
+                                        <div class="small-12 cell">
+                                            <label for="" class="font-bold">Info Supplier</label>
+                                            <autocompsupp placeholder="Cari supplier..." selection="selection" source="searchSupplier" class="margin-bottom-12px">
+                                        </div>
+                                        <div class="small-3 cell padding-right-0">
+                                            <div class="vs-info-supplier middle-left" style="background: #3f51b5; color: white;padding-left: 8px; padding-right: 8px;">
+                                                <i class="mdi mdi-store"></i>&nbsp;&nbsp;
+                                                <span ng-show="loadingSupp"><i class="mdi mdi-18px mdi-spin mdi-loading"></i></span>
+                                                <span ng-hide="loadingSupp" class="text-uppercase">{{ supplier.name }}</span>
+                                            </div>
+                                            <input type="hidden" name="" ng-value="supplier.name">
+                                            <input type="hidden" name="" ng-value="supplier.id">
+                                        </div>
+                                        <div class="small-6 cell padding-left-0 padding-right-0">
+                                            <div class="vs-info-supplier middle-left" style="background: #e4c05c; color: white;padding-left: 8px; padding-right: 8px;">
+                                                <i class="mdi mdi-map-marker"></i>&nbsp;&nbsp;
+                                                <span ng-show="loadingSupp"><i class="mdi mdi-18px mdi-spin mdi-loading"></i></span>
+                                                <span ng-hide="loadingSupp">{{ supplier.address }}<span ng-if="supplier.address">,</span> {{ supplier.city }}</span>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="small-4 cell padding-left-0 padding-right-0">
+                                            <div class="vs-info-supplier middle-left" style="background: #50c36c; color: white;padding-left: 8px; padding-right: 8px;">
+                                                <i class="mdi mdi-email"></i>&nbsp;&nbsp;
+                                                <span ng-show="loadingSupp"><i class="mdi mdi-18px mdi-spin mdi-loading"></i></span>
+                                                <span ng-hide="loadingSupp">{{ supplier.email }}</span>
+                                            </div>
+                                        </div> -->
+                                        <div class="small-3 cell padding-left-0">
+                                            <div class="vs-info-supplier middle-left" style="background: #e57e25; color: white;padding-left: 8px; padding-right: 8px;">
+                                                <i class="mdi mdi-phone"></i>&nbsp;&nbsp;
+                                                <span ng-show="loadingSupp"><i class="mdi mdi-18px mdi-spin mdi-loading"></i></span>
+                                                <span ng-hide="loadingSupp">{{ supplier.phone_1 }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="large-12 cell">
+                                <hr style="margin-top:0; margin-bottom:4px; border-bottom: 2px solid #EBEBEB;">
+                            </div>
+                            <div class="large-12 cell">
+                                <div class="vs-box-page-body">
+                                    <div class="grid-x grid-padding-x">
+                                        <div class="small-6 cell">
+                                            <label for="" class="font-bold">No. Faktur</label>
+                                            <input type="text" placeholder="Masukkan No. Faktur..." class="margin-bottom-12px" ng-model="tr_purchases.code">
+                                            <!-- <input type="text" class="margin-bottom-12px" ng-model="tr_purchases.invoice"> -->
+                                        </div>
+                                        <div class="small-6 cell">
+                                            <label for="" class="font-bold">Tanggal Faktur</label>
+                                            <input type="text" placeholder="Contoh: 17-08-1945" class="margin-bottom-12px" ng-model="tr_purchases.date_input" ui-date-mask="DD-MM-YYYY">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <label for="" class="font-bold">Cari Barang</label>
+                                            <autocompurch placeholder="Cari barang..." selection="selection" source="searchItem" class="margin-bottom-12px">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <table class="vs-table show-for-large">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="48" class="text-center">No.</th>
+                                                        <th class="text-center">Nama Barang</th>
+                                                        <th width="100" class="text-center">Kuantitas</th>
+                                                        <th width="100" class="text-center">Satuan</th>
+                                                        <th width="150" class="text-center">Harga Awal</th>
+                                                        <th width="80" class="text-center">Diskon</th>
+                                                        <th width="150" class="text-center">Harga Akhir</th>
+                                                        <th width="80" class="text-center">PPN (%)</th>
+                                                        <th width="150" class="text-center">Subtotal</th>
+                                                        <th colspan="2">&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody ng-repeat="cart in data_cart" id="data-cart">
+                                                    <tr>
+                                                        <td>{{ ($index + 1) }}.</td>
+                                                        <td>
+                                                            <div class="font-bold">
+                                                                <span class="text-uppercase">{{ cart.name }}</span>
+                                                                <input type="hidden" ng-model="cart.id">
+                                                                <input type="hidden" ng-model="cart.name">
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <input type="text" ng-value="cart.qty | currency:'':0" class="text-right margin-bottom-0" id="cart-qty-{{ $index }}" ng-model="cart.qty" ui-number-mask="0" autocomplete="off" required ng-keyup="calcQty(this)">
+                                                        </td>
+                                                        <td>
+                                                            <div>
+                                                                <select style="width: 100%" name="unit" ng-model="cart.options.unit" ng-change="selectUnit(this, $index, cart.options.unit, cart)">
+                                                                    <option value="box">Box</option>
+                                                                    <option value="tablet">Biji</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <input type="text" class="text-right margin-bottom-0" id="cart-price-first-{{ $index }}" ng-model="cart.price" ui-number-mask="0" ng-keyup="calcPriceItem(this)">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="text-right" ng-model="cart.options.discount" ui-percentage-mask="1" autocomplete="off" ng-keyup="calcDiscItem(this)">
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <input type="text" ng-value="cart.options.price_first | currency:'':0" class="text-right margin-bottom-0" id="cart-price-first-{{ $index }}" ng-model="cart.options.price_first" ui-number-mask="0" disabled>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <!-- <input type="text" class="text-right margin-bottom-0" id="cart-price-first-{{ $index }}" ng-model="cart.options.ppn" ui-percentage-mask="1" ng-keyup="calcPricePpn(this)"> -->
+                                                            <div class="vs-box-checkbox middle-center">
+                                                                <div class="checkbox checkbox-success">
+                                                                    <input class="styled" type="checkbox" ng-checked="check_ppn" disabled>
+                                                                    <label class="check-ppn"></label>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <input type="text" ng-value="cart.options.price_last | currency:'':0" class="text-right margin-bottom-0" id="cart-price-last-{{ $index }}" ng-model="cart.options.price_last" ui-number-mask="0" ng-keyup="validPriceDiscount(this)" disabled>
+                                                        </td>
+                                                        <td class="text-center" width="50">
+                                                            <a href="javascript:;" ng-click="cartRemove({rowId: cart.rowId})" id="del-cart-{{ $index+1 }}" class="button vs-flat-button alert btn-small btn-square margin-bottom-0 btn-edit btn-icon"><i class="mdi mdi-delete mdi-14px"></i></a>
+                                                        </td>
+                                                        <td class="text-center" width="50">
+                                                            <a href="javascript:;" ng-toggle="{{$index+1}}" ng-toggle-group="data" ng-toggle-closeable="true" id="edit-cart-{{ $index+1 }}" class="button vs-flat-button primary btn-small btn-square margin-bottom-0 btn-edit btn-icon"><i class="mdi mdi-pencil mdi-14px"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr ng-toggled="{{$index+1}}">
+                                                        <td colspan="11" style="border: 1px solid #e0e0e0;">
+                                                            <div class="grid-x grid-padding-x">
+                                                                <div class="medium-3 cell">
+                                                                    <div class="grid-x grid-padding-x">
+                                                                        <div class="small-12 cell" ng-if="cart.options.unit == 'box'">
+                                                                            <label for="">Kuantitas (dalam Box)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.qty_in_box" ui-number-mask="0" ng-keyup="validQtyInBox(this, event)" disabled>
+                                                                        </div>
+                                                                        <div class="small-12 cell" ng-if="cart.options.unit == 'box'">
+                                                                            <label for="">Kuantitas (dalam Strip)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.qty_in_strip" ui-number-mask="0" ng-keyup="validQtyInStrip(this, event)" disabled>
+                                                                        </div>
+                                                                        <div class="small-12 cell">
+                                                                            <label for="">Kuantitas (dalam Biji)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.qty_in_tablet" ui-number-mask="0" ng-keyup="calcQtyTotal(this, event)" disabled>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="medium-3 cell">
+                                                                    <div class="grid-x grid-padding-x">
+                                                                        <div class="small-12 cell" ng-if="cart.options.unit == 'box'">
+                                                                            <label for="">Harga Beli (per Box)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_purchase_per_box" ui-number-mask="0" ng-keyup="calcPurchaseStripTablet(this, event)">
+                                                                        </div>
+                                                                        <div class="small-12 cell" ng-if="cart.options.unit == 'box'">
+                                                                            <label for="">Harga Beli (per Strip)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_purchase_per_strip" ui-number-mask="0" ng-keyup="validPricePurchaseStrip(this, event)">
+                                                                        </div>
+                                                                        <div class="small-12 cell">
+                                                                            <label for="">Harga Beli (per Biji)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_purchase_per_tablet" ui-number-mask="0" ng-keyup="validPricePurchaseTablet(this, event)">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="medium-3 cell">
+                                                                    <div class="grid-x grid-padding-x">
+                                                                        <div class="small-12 cell" ng-if="cart.options.unit == 'box'">
+                                                                            <label for="">Keuntungan (% per Box)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.percent_profit_per_box" ui-percentage-mask="1" ng-keyup="calcProfitBox(this, event)">
+                                                                        </div>
+                                                                        <div class="small-12 cell" ng-if="cart.options.unit == 'box'">
+                                                                            <label for="">Keuntungan (% per Strip)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.percent_profit_per_strip" ui-percentage-mask="1" ng-keyup="calcProfitStrip(this, event)">
+                                                                        </div>
+                                                                        <div class="small-12 cell">
+                                                                            <label for="">Keuntungan (% per Biji)</label>
+                                                                            <input type="text" placeholder="0" class="text-right" ng-model="cart.options.percent_profit_per_tablet" ui-percentage-mask="1" ng-keyup="calcProfitTablet(this, event)">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="medium-3 cell">
+                                                                    <div class="grid-x grid-padding-x">
+                                                                        <div class="small-12 cell" ng-if="cart.options.unit == 'box'">
+                                                                            <label for="">Harga Jual (per Box)</label>
+                                                                            <!-- <input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_sell_per_box" ui-number-mask="0" ng-keyup="calcSellStripTablet(this, event)"> -->
+																			<input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_sell_per_box" ui-number-mask="0">
+                                                                        </div>
+                                                                        <div class="small-12 cell" ng-if="cart.options.unit == 'box'">
+                                                                            <label for="">Harga Jual (per Strip)</label>
+                                                                            <!--<input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_sell_per_strip" ui-number-mask="0" ng-keyup="validPriceSellStrip(this, event)">-->
+																			<input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_sell_per_strip" ui-number-mask="0">
+                                                                        </div>
+                                                                        <div class="small-12 cell">
+                                                                            <label for="">Harga Jual (per Biji)</label>
+                                                                            <!--<input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_sell_per_tablet" ui-number-mask="0" ng-keyup="validPriceSellTablet(this, event)">-->
+																			<input type="text" placeholder="0" class="text-right" ng-model="cart.options.price_sell_per_tablet" ui-number-mask="0">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tbody ng-show="data_cart.length < 1">
+                                                    <tr>
+                                                        <td class="text-center" colspan="10">Maaf, keranjang belanja kosong.</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <div class="grid-x grid-padding-x align-right">
+                                                <div class="small-3 cell">
+                                                    <label for="">Total Harga</label>
+                                                    <input type="text" class="text-right" ng-model="tr_purchases.total_price" ui-number-mask="0" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="grid-x grid-padding-x align-right">
+                                                <div class="small-3 cell">
+                                                    <label for="">Potongan Harga</label>
+                                                    <input type="text" class="text-right" ng-model="tr_purchases.disc_total" ui-number-mask="0" ng-keyup="calcDiscTotal(this)" ng-disabled="tr_purchases.grand_total < 1" id="inp-discprice" id="inp-discprice">
+                                                </div>
+                                            </div>
+                                            <div class="grid-x grid-padding-x align-right">
+                                                <div class="small-3 cell">
+                                                    <label for="">PPN (%)</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-label padding-left-0 padding-right-0">
+                                                            <div class="vs-box-checkbox">
+                                                                <div class="checkbox checkbox-success">
+                                                                    <input id="check-ppn" class="styled" type="checkbox" ng-click="checkPpn(check_ppn); $event.stopPropagation();" ng-checked="check_ppn" ng-disabled="tr_purchases.grand_total < 1">
+                                                                    <label for="check-ppn" class="check-ppn"></label>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                        <input type="text" class="text-right" ng-model="tr_purchases.ppn" ui-number-mask="0" ng-keyup="validPpn(this)" disabled>
+                                                    </div>
+                                                    <!-- <div class="grid-x grid-padding-x">
+                                                        <div class="small-2 cell">
+                                                            <div class="vs-box-checkbox">
+                                                                <div class="checkbox checkbox-success">
+                                                                    <input id="check-ppn" class="styled" type="checkbox" checked>
+                                                                    <label for="check-ppn"></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="small-10 cell">
+                                                            <input type="text" class="text-right" ng-model="tr_purchases.ppn" ui-percentage-mask="1" ng-keyup="validPpn(this)" disabled>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="grid-x grid-padding-x align-right">
+                                                <div class="small-3 cell">
+                                                    <label for="">Grand Total</label>
+                                                    <h4 class="font-bold text-right margin-bottom-0">{{ tr_purchases.grand_total | currency:'':0 }}</h4>
+                                                    <input type="hidden" class="text-right" ng-model="tr_purchases.grand_total" ui-number-mask="0" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vs-box-page-footer">
+                            <div class="grid-x">
+                                <div class="small-12 cell text-right">
+                                    <button class="button vs-flat-button btn-success margin-bottom-0" ng-disabled="tr_purchases.grand_total < 1 || tr_purchases.code == '' || tr_purchases.date_input =='' || supplier.id ==''" data-toggle="confirm-save-purchases" id="modal-confirm-save-purchases">Simpan</button>
+                                    <div class="reveal large" id="confirm-save-purchases" data-reveal data-close-on-click="true" data-animation-in="slide-in-down" data-animation-out="slide-out-up">
+                                        <h5>Data Pembelian akan disimpan, <span style="color: #cc4b37" class="font-bold">MOHON KOREKSI LAGI!</span></h5>
+                                        <table class="vs-table show-for-large">
+                                            <thead>
+                                                <tr>
+                                                    <th width="48" class="text-center">No.</th>
+                                                    <th class="text-center">Nama Barang</th>
+                                                    <th width="100" class="text-center">Kuantitas</th>
+                                                    <th width="100" class="text-center">Satuan</th>
+                                                    <th width="150" class="text-center">Harga Awal</th>
+                                                    <th width="80" class="text-center">Diskon</th>
+                                                    <th width="150" class="text-center">Harga Akhir</th>
+                                                    <th width="80" class="text-center">PPN (%)</th>
+                                                    <th width="150" class="text-center">Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody ng-repeat="cart in data_cart">
+                                                <tr>
+                                                    <td>{{ ($index + 1) }}.</td>
+                                                    <td>
+                                                        <div class="font-bold">
+                                                            <span class="text-uppercase">{{ cart.name }}</span>
+                                                            <input type="hidden" ng-model="cart.id">
+                                                            <input type="hidden" ng-model="cart.name">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{ cart.qty | currency:'':0}}
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            {{ cart.options.unit }}
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{ cart.price | currency:'':0}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{ cart.options.discount * 100 }} %
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{ cart.options.price_first | currency:'':0}}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <!-- <input type="text" class="text-right margin-bottom-0" id="cart-price-first-{{ $index }}" ng-model="cart.options.ppn" ui-percentage-mask="1" ng-keyup="calcPricePpn(this)"> -->
+                                                        <div class="vs-box-checkbox middle-center">
+                                                            <div class="checkbox checkbox-success">
+                                                                <input class="styled" type="checkbox" ng-checked="check_ppn" disabled>
+                                                                <label class="check-ppn"></label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{ cart.options.price_last | currency:'':0}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="8" class="text-right">Total Harga :</td>
+                                                    <td class="text-right">
+                                                        {{ tr_purchases.total_price | currency:'':0}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="text-right">Potongan Harga :</td>
+                                                    <td class="text-right">
+                                                        {{ tr_purchases.disc_total | currency:'':0}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="text-right">PPN :</td>
+                                                    <td class="text-right" style="border-bottom:1px double #333">
+                                                        {{ tr_purchases.ppn | currency:'':0}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="8" class="text-right">Grand Total :</td>
+                                                    <td class="text-right">
+                                                        <h5 class="font-bold">{{ tr_purchases.grand_total | currency:'':0}}</h5>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <button class="close-button" data-close aria-label="Close reveal" type="button">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <button ng-click="createData()" class="button vs-flat-button btn-success margin-bottom-0 float-right" ng-disabled="tr_purchases.grand_total < 1 || tr_purchases.code == '' || tr_purchases.date_input =='' || supplier.id ==''" data-close>Simpan Sekarang</button>
+                                        <button class="button vs-flat-button alert margin-bottom-0 float-right margin-right-8px" data-close>Batal</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + f ]</td>
+                        <td>Kolom pencarian barang</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + s ]</td>
+                        <td>Simpan</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + d ]</td>
+                        <td>Kolom diskon tunai</td>
+                    </tr>
+					<tr>
+                        <td>[ alt + b ]</td>
+                        <td>Kolom pencarian supplier</td>
+                    </tr>
+					<tr>
+                        <td>[ alt + a ]</td>
+                        <td>Centang kolom PPN (Catatan: berfungsi setelah kolom total diisi)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

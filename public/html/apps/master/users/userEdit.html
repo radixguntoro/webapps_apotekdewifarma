@@ -1,0 +1,199 @@
+<div class="vs-page-user">
+    <div class="vs-page-body">
+        <!-- <form name="userForm" ng-submit="updateData(userForm.$valid)" id="userForm"> -->
+            <div class="grid-x">
+                <div class="large-12 cell align-self-middle">
+                    <div class="vs-box-page-content z-depth-1">
+                        <div class="vs-box-page-header vs-box-page-header-fluid">
+                            <div class="grid-x">
+                                <div class="small-12 cell align-self-middle">
+                                    <div class="vs-page-title middle-left">
+                                        <img src="apps/img/icon/create.png" class="mdi-right">
+                                        <span class="vs-page-title font-bold">Buat Pengguna</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-x">
+                            <div class="large-12 cell">
+                                <div class="vs-box-page-body">
+                                    <div class="vs-loading" ng-show="loading">
+                                        <div class="showbox">
+                                            <div class="loader">
+                                                <svg class="circular" viewBox="25 25 50 50">
+                                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-x grid-padding-x">
+                                        <div class="large-6 cell">
+                                            <div class="grid-x grid-padding-x">
+                                                <div class="small-6 cell">
+                                                    <label for="">Nama Awal</label>
+                                                    <input type="text" placeholder="Nama awal..." ng-model="user.first_name" id="user-name">
+                                                </div>
+                                                <div class="small-6 cell">
+                                                    <label for="">Nama Akhir</label>
+                                                    <input type="text" placeholder="Nama akhir..." ng-model="user.last_name">
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Username</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-label"><i class="mdi mdi-account"></i></span>
+                                                        <input type="text" placeholder="Username..." ng-model="user.email">
+                                                    </div>
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Password</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-label"><i class="mdi mdi-key"></i></span>
+                                                        <input type="text" placeholder="******" ng-model="user.password">
+                                                        <div class="input-group-button">
+                                                            <button class="button"><i class="mdi mdi-eye"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Konfirmasi Password</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-label"><i class="mdi mdi-key"></i></span>
+                                                        <input type="text" placeholder="******" ng-model="user.password">
+                                                    </div>
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Tanggal Lahir</label>
+                                                    <input type="text" placeholder="Contoh: 17-08-1945 (Tangal-Bulan-Tahun)" ng-model="user.birthdate" ui-date-mask="DD-MM-YYYY">
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <hr>
+                                                    <label for="">Jenis Kelamin</label>
+                                                    <div class="vs-box-radio">
+                                                        <div class="grid-x">
+                                                            <div class="small-6 medium-3 large-4 cell middle-left">
+                                                                <label class="radio">
+                                                                    <input type="radio" name="gender" ng-model="gender" value="P" hidden ng-checked="true">
+                                                                    <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Perempuan
+                                                                </label>
+                                                            </div>
+                                                            <div class="small-6 medium-3 large-4 cell middle-left">
+                                                                <label class="radio">
+                                                                    <input type="radio" name="gender" ng-model="gender" value="L" hidden>
+                                                                    <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Laki-laki
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="large-6 cell">
+                                            <div class="grid-x grid-padding-x">
+                                                <div class="small-12 cell">
+                                                    <label for="">No. Hp</label>
+                                                    <input type="text" placeholder="Nomor Hp..." ng-model="user.phone">
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Jabatan</label>
+                                                    <select name="" id="" ng-model="user.permission">
+                                                        <option value="">--- Pilih Jabatan ---</option>
+                                                        <option value="1">Bagian Penjualan</option>
+                                                        <option value="2">Bagian Pembelian</option>
+                                                        <option value="99">Admin</option>
+                                                    </select>
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">No. KTP</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-label"><i class="mdi mdi-account-card-details"></i></span>
+                                                        <input type="text" placeholder="Nomor KTP..." ng-model="user.ktp">
+                                                    </div>
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Alamat</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-label"><i class="mdi mdi-map-marker"></i></span>
+                                                        <input type="text" placeholder="Alamat..." ng-model="user.address">
+                                                    </div>
+                                                </div>
+                                                <div class="small-4 cell">
+                                                    <label for="">Provinsi</label>
+                                                    <input type="text" placeholder="Provinsi..." ng-model="user.province">
+                                                </div>
+                                                <div class="small-4 cell">
+                                                    <label for="">Kota</label>
+                                                    <input type="text" placeholder="Kota..." ng-model="user.city">
+                                                </div>
+                                                <div class="small-4 cell">
+                                                    <label for="">Kode POS</label>
+                                                    <input type="text" placeholder="Kode POS..." ng-model="user.zip_code">
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <hr>
+                                                    <label for="">Status</label>
+                                                    <div class="vs-box-radio">
+                                                        <div class="grid-x">
+                                                            <div class="small-6 medium-3 large-4 cell middle-left">
+                                                                <label class="radio">
+                                                                    <input type="radio" name="status" ng-model="status" value="A" hidden ng-checked="true">
+                                                                    <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Aktif
+                                                                </label>
+                                                            </div>
+                                                            <div class="small-6 medium-3 large-4 cell middle-left">
+                                                                <label class="radio">
+                                                                    <input type="radio" name="status" ng-model="status" value="N" hidden>
+                                                                    <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Tidak Aktif
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vs-box-page-footer">
+                            <div class="grid-x">
+                                <div class="small-12 cell text-right">
+                                    <button ui-sref="user-list" class="button vs-flat-button btn-smoke margin-bottom-0 margin-right-8px">Kembali</button>
+                                    <button ng-click="updateData()" class="button vs-flat-button btn-success margin-bottom-0" ng-disabled="user.first_name == null">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + d ]</td>
+                        <td>Kolom Nama Awal</td>
+                    </tr>
+                    <tr>
+                        <td>[ ctrl + d ]</td>
+                        <td>Kolom Nama Akhir</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + s ]</td>
+                        <td>Simpan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

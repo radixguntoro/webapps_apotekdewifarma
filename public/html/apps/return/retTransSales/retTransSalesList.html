@@ -1,0 +1,167 @@
+<div class="vs-page-history">
+    <div class="vs-page-body">
+        <div class="grid-x grid-padding-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-1">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x grid-padding-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/box.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Retur Penjualan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-padding-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x align-center">
+                                    <div class="small-12 cell margin-bottom-12px">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-10 cell">
+                                                <label for="">ID. Transaksi</label>
+                                                <input type="text" ng-model="return.code" placeholder="Isikan ID Transaksi..." autocomplete="off">
+                                            </div>
+                                            <div class="small-2 cell font-bold text-right align-self-middle">
+                                                <button class="button vs-flat-button btn-secondary btn-small margin-top-12px margin-bottom-0 expanded" ng-click="filterData()">Filter</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x">
+                                    <div class="small-12 cell">
+                                        <table class="vs-table show-for-large">
+                                            <thead>
+                                                <tr>
+                                                    <th width="48">No.</th>
+                                                    <th width="175" class="text-center">Tanggal</th>
+                                                    <th width="150" class="text-center">No. Faktur</th>
+                                                    <th width="200" class="text-center">Grand Total</th>
+                                                    <th width="200" class="text-center">Total Bayar</th>
+                                                    <th width="200" class="text-center">Total Kembali</th>
+                                                    <th class="text-center">Admin</th>
+                                                    <th class="text-center" colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody dir-paginate="return_trans_sales in data | itemsPerPage:25" total-items="totalItems" current-page="pagination.current">
+                                                <tr>
+                                                    <td>{{ ($index + 1) + (pagination.current - 1) * 25}}.</td>
+                                                    <td>
+                                                        {{ return_trans_sales.date | date : "dd MMM y" }}
+                                                        {{ return_trans_sales.time }}
+                                                    </td>
+                                                    <td>{{ return_trans_sales.code }}</td>
+                                                    <td class="text-right">{{ return_trans_sales.grand_total | currency:'':0 }}</td>
+                                                    <td class="text-right">{{ return_trans_sales.payment | currency:'':0 }}</td>
+                                                    <td class="text-right">{{ return_trans_sales.balance | currency:'':0 }}</td>
+                                                    <td class="text-center">{{ return_trans_sales.first_name }} {{ return_trans_sales.last_name }}</td>
+                                                    <td class="text-center">
+                                                        <span class="label button btn-success z-depth-1 margin-top-8px" ng-click="showTransSalesDetail(return_trans_sales)" ng-toggle="{{$index}}" ng-toggle-group="data" ng-toggle-closeable="true">Lihat Detil</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span class="label button btn-primary z-depth-1 margin-top-8px" ng-click="returnSales({id: return_trans_sales.id})">Retur</span>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-toggled="{{$index}}">
+                                                    <td colspan="9" class="vs-row-detail vs-box-sub-table" style="padding: 0 !important; background: white !important;">
+                                                        <div class="vs-loading" ng-show="loadingDetail">
+                                                            <div class="showbox">
+                                                                <div class="loader">
+                                                                    <svg class="circular" viewBox="25 25 50 50">
+                                                                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-x grid-padding-x">
+                                                            <div class="medium-12 cell">
+                                                                <div class="callout primary margin-bottom-0 no-border">
+                                                                    <h5 class="font-bold">Rincian Transaksi</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="medium-12 cell">
+                                                                <div class="padding-1">
+                                                                    <table class="margin-bottom-0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th class="text-center">Nama Barang</th>
+                                                                                <th class="text-center" width="200">Harga</th>
+                                                                                <th class="text-center" width="100">Kuantitas</th>
+                                                                                <th class="text-center" width="150">Diskon (%)</th>
+                                                                                <th class="text-center" width="150">Diskon Harga</th>
+                                                                                <th class="text-center" width="200">Subtotal</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="trans_detail in trans_sales_detail">
+                                                                                <td>
+                                                                                    <span class="text-uppercase font-bold">{{ trans_detail.name }}</span>
+                                                                                    <p class="margin-bottom-0">Satuan: <span class="">{{ trans_detail.unit }}</span></p>
+                                                                                </td>
+                                                                                <td class="text-right">{{ trans_detail.price | currency:'':0; }}</td>
+                                                                                <td class="text-right">{{ trans_detail.qty }}</td>
+                                                                                <td class="text-right">{{ trans_detail.discount }}</td>
+                                                                                <td class="text-right">{{ trans_detail.price * trans_detail.discount }}</td>
+                                                                                <td class="text-right">{{ trans_detail.subtotal | currency:'':0; }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="5" class="text-right font-bold">Total Harga :</td>
+                                                                                <td class="text-right">{{ return_trans_sales.total_price | currency:'':0; }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="5" class="text-right font-bold">Diskon :</td>
+                                                                                <td class="text-right">{{ return_trans_sales.discount_price | currency:'':0; }}</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td colspan="5" class="text-right font-bold">Grand Total :</td>
+                                                                                <td class="text-right">{{ return_trans_sales.grand_total | currency:'':0; }}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="medium-12 cell">
+                                                                <div class="callout primary margin-bottom-0 no-border">
+                                                                    <h5 class="font-bold">&nbsp;</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody ng-show="data.length < 1 | data == 0">
+                                                <tr>
+                                                    <td class="text-center" colspan="9">Maaf, data tidak ditemukan</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vs-box-page-footer">
+                        <div class="grid-x" ng-hide="loading">
+                            <div class="small-6 cell align-self-middle">
+                                <span>Total: {{ totalItems }}</span>
+                            </div>
+                            <div class="small-6 cell align-self-middle">
+                                <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="/html/apps/return/retTransSales/retTransSalesPagination.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

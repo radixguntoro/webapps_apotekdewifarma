@@ -1,0 +1,114 @@
+.vs-account-sidebar {
+    border       : 1px solid lighten($color-grey, 5%);
+    margin-bottom: 16px;
+
+    .vs-acc-side-head {
+        border-bottom: lighten($color-grey, 5%);
+        padding      : 16px;
+
+        h6 {
+            font-weight  : bold;
+            margin-bottom: 0;
+            margin-top   : 16px;
+        }
+    }
+
+    .vs-acc-side-body {
+        background    : lighten($color-grey, 15%);
+        padding-top   : 8px;
+        padding-bottom: 8px;
+
+        ul {
+            li {
+                a {
+                    padding   : 12px 16px;
+                    transition: all 250ms ease;
+                    font-size : 14px;
+
+                    &:hover {
+                        background: lighten($color-grey, 10%);
+                        transition: all 250ms ease;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.vs-account-content {
+    .vs-acc-content-head {
+        padding      : 16px;
+        background   : lighten($color-blue, 30%);
+        color        : white;
+        margin-bottom: 16px;
+    }
+
+    .vs-acc-content-body {
+        .vs-panel-head {
+            padding   : 12px 16px;
+            background: lighten($color-grey, 5%);
+
+            h6 {
+                margin: 0;
+            }
+
+            .button {
+                margin-bottom: 0;
+                padding      : 12px 16px;
+            }
+        }
+
+        .vs-panel-body {
+            padding      : 12px 16px;
+            border       : 1px solid lighten($color-grey, 5%);
+            margin-bottom: 16px;
+            font-size    : 14px;
+
+            .group-user-data {
+                margin-bottom: 8px;
+            }
+        }
+
+        .vs-panel-body {
+            input,
+            select {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.vs-user-page {
+    .vs-cart-item-header {
+        background   : $color-smoke;
+        padding      : 8px 0;
+        margin-bottom: 0;
+        font-size    : 13px;
+        font-weight  : bold;
+        border-top   : 1px solid lighten($color-grey, 5%);
+        border-bottom: 1px solid lighten($color-grey, 5%);
+    }
+
+    .vs-cart-item-body {
+        position: relative;
+
+        .vs-box-cart-item {
+            padding      : 8px 0;
+            border-bottom: 1px solid $color-grey;
+
+            .text-invoice {
+                color: $color-blue;
+            }
+
+            .button {
+                // padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .label {
+                color    : white;
+                font-size: 13px;
+            }
+        }
+    }
+}

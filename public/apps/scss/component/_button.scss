@@ -1,0 +1,93 @@
+.vs-flat-button {
+    padding       : 8px 24px;
+    @extend .z-depth-1;
+    font-size     : 14px;
+    text-transform: uppercase;
+    @extend .font-bold;
+    height        : 40px;
+    border-radius : 3px;
+}
+
+.btn-primary {
+    background: $color-primary;
+    color     : white;
+    transition: all 200ms ease;
+
+    &:focus,
+    &:hover {
+        cursor    : pointer;
+        transition: all 200ms ease;
+        background: lighten($color-primary, 5%);
+    }
+}
+
+.btn-secondary {
+    background: $color-secondary;
+    color     : white;
+    transition: all 200ms ease;
+
+    &:focus,
+    &:hover {
+        cursor    : pointer;
+        transition: all 200ms ease;
+        background: lighten($color-secondary, 5%);
+    }
+}
+
+.btn-smoke {
+    background: darken($color-smoke, 5%);
+    color     : $color-black !important;
+    transition: all 200ms ease;
+
+    &:focus,
+    &:hover {
+        cursor    : pointer;
+        transition: all 200ms ease;
+        background: darken($color-smoke, 10%);
+    }
+}
+
+.btn-success {
+    background: $color-success;
+    color     : white;
+    transition: all 200ms ease;
+
+    &:focus,
+    &:hover {
+        cursor    : pointer;
+        transition: all 200ms ease;
+        background: lighten($color-success, 5%);
+    }
+}
+
+.btn-success.disabled,
+.btn-success:disabled,
+.btn-success[disabled] {
+    background-color: $color-success !important;
+    color           : white !important;
+    opacity         : 0.5;
+    cursor          : not-allowed;
+
+    &:hover {
+        color: white !important;
+    }
+}
+
+.btn-expanded {
+    width       : 100%;
+    margin-right: 0;
+    margin-left : 0;
+}
+
+.btn-square {
+    padding: 8px;
+}
+
+.btn-small {
+    height: 34px !important;
+}
+
+.btn-icon {
+    height : 26px !important;
+    padding: 4px;
+}

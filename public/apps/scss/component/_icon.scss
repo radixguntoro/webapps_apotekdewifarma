@@ -1,0 +1,34 @@
+.ion-lg {
+	font-size: 1.33333333em;
+	line-height: 0.75em;
+	vertical-align: -15%;
+}
+
+.ion-2x {
+	font-size: 2em;
+}
+
+.ion-3x {
+	font-size: 3em;
+}
+
+.ion-4x {
+	font-size: 4em;
+}
+
+.ion-5x {
+	font-size: 5em;
+}
+
+.ion-space-right {
+	padding-right: 0.25em;
+}
+
+.ion-space-left {
+	padding-left: 0.25em;
+}
+
+.mdi-spin:before {
+	-webkit-animation: mdi-spin .5s infinite linear;
+	animation: mdi-spin .5s infinite linear;
+}

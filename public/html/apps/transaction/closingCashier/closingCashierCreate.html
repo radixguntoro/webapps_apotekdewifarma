@@ -1,0 +1,90 @@
+<div class="vs-page-closing-cashier">
+    <div class="vs-page-body">
+        <div class="grid-x align-center">
+            <div class="large-6 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-2">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/closed.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Tutup Kasir</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="grid-x grid-padding-x align-center">
+                                    <div class="small-12 cell margin-bottom-8px">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-12 cell align-self-middle">
+                                                <label for="">Tanggal</label>
+                                                <input type="text" placeholder="Contoh: 17-08-1945 (Tangal-Bulan-Tahun)" ng-model="cashier.date" ui-date-mask="DD-MM-YYYY" ng-keyup="checkDate()">
+                                            </div>
+                                            <div class="small-6 cell align-self-middle">
+                                                <label for="">Nama Kasir</label>
+                                                <select ng-model="cashier.cashier_id" selected-user id="select-cashier" ng-change="getIncomePerShift(this, $event, cashier.cashier_id)" disabled>
+                                                    <option value="0">Pilih Kasir</option>
+                                                    <option value="{{ user.id }}" ng-repeat="user in data_user">{{ user.first_name }} {{ user.last_name }}</option>
+                                                </select>
+                                                <input type="hidden" ng-model="code">
+                                            </div>
+                                            <div class="small-6 cell align-self-middle">
+                                                <label for="">Shift</label>
+                                                <select ng-model="cashier.shift" id="select-shift" disabled>
+                                                    <option value="pagi" ng-selected="true">Pagi</option>
+                                                    <option value="sore">Sore</option>
+                                                    <option value="malam">Malam</option>
+                                                </select>
+                                            </div>
+                                            <div class="small-12 cell align-self-middle">
+                                                <label for="">Pendapatan Sistem</label>
+                                                <input type="text" ng-model="cashier.income_app" id="cashier-income-app" disabled class="text-right" ui-number-mask="0">
+                                            </div>
+                                            <div class="small-12 cell align-self-middle">
+                                                <label for="">Pendapatan Fisik</label>
+                                                <input type="text" ng-model="cashier.income_real" id="cashier-income-real" class="text-right" ui-number-mask="0" ng-keyup="calcIncome(this, $event)">
+                                            </div>
+                                            <div class="small-12 cell align-self-middle margin-top-8px">
+                                                <div class="grid-x grid-padding-x">
+                                                    <div class="small-3 cell font-bold">Selisih Pendapatan :</div>
+                                                    <div class="small-9 cell text-right"><h4 class="font-bold" style="background: #fdfdbe; padding: 8px">{{ cashier.income_diff | currency:'':0 }}</h4></div>
+                                                </div>
+                                            </div>
+                                            <div class="small-12 cell text-right">
+                                                <button ng-click="createData()" class="button vs-flat-button btn-success margin-bottom-0 margin-top-8px" ng-disabled="cashier.income_real == 0 || cashier.income_real == null || cashier.cashier_id == 0" id="btn-save">Simpan</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[ alt + s ]</td>
+                        <td>Simpan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

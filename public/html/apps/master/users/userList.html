@@ -1,0 +1,167 @@
+<div class="vs-page-user">
+    <div class="vs-page-body">
+        <div class="grid-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-1">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-10 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/list.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Daftar Pengguna</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x">
+                                    <div class="small-12 cell">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-2 cell">
+                                                <button ui-sref="user-create" class="button float-right vs-flat-button btn-small expanded btn-secondary middle-center margin-bottom-0">Tambah</button>
+                                            </div>
+                                            <div class="small-10 cell">
+                                                <input type="text" placeholder="Cari pengguna berdasarkan nama, alamat, ktp dan nik..." class="margin-bottom-12px" ng-change="searchData()" ng-model="searchText" id="inp-search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-12 cell">
+                                        <table class="vs-table show-for-large margin-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th width="56" class="text-center">No.</th>
+                                                    <th class="text-center" width="125">NIK</th>
+                                                    <th class="text-center">Nama Pengguna</th>
+                                                    <th class="text-center" width="500">Alamat</th>
+                                                    <th class="text-center" width="125">No. Hp</th>
+                                                    <th class="text-center" width="100">Posisi</th>
+                                                    <th class="text-center" width="100">Status</th>
+                                                    <th width="50" colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody dir-paginate="user in data | itemsPerPage:25" total-items="totalItems" current-page="pagination.current">
+                                                <tr>
+                                                    <td>{{ ($index + 1) + (pagination.current - 1) * 25}}.</td>
+                                                    <td>{{ user.nik }}</td>
+                                                    <td class="font-bold">{{ user.first_name }} {{ user.last_name }}</td>
+                                                    <td>{{ user.address }}<span ng-if="user.city">,</span> {{ user.city }}</td>
+                                                    <td>{{ user.phone }}</td>
+                                                    <td>
+                                                        <span ng-if="user.permission == 99">Admin</span>
+                                                        <span ng-if="user.permission == 1">Penjualan</span>
+                                                        <span ng-if="user.permission == 2">Pembelian</span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <label class="label success text-white" ng-if="user.status == 'A'">Aktif</label>
+                                                        <label class="label alert text-white" ng-if="user.status == 'N'">Tidak Aktif</label>
+                                                    </td>
+                                                    <td class="text-center" width="25">
+                                                        <button ui-sref="user-edit({id: user.id})" class="button vs-flat-button primary btn-small btn-square margin-bottom-0 btn-edit btn-icon" ng-keypress="pressEdit(this, $event, item.id)"><i class="mdi mdi-pencil mdi-14px"></i></button>
+                                                    </td>
+                                                    <td class="text-center" width="25">
+                                                        <button class="button vs-flat-button alert btn-small btn-square margin-bottom-0 btn-edit btn-icon" ng-click="showUserDetail(user)" ng-toggle="{{$index}}" ng-toggle-group="data" ng-toggle-closeable="true"><i class="mdi mdi-information-variant mdi-14px"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-toggled="{{$index}}">
+                                                    <td colspan="8" class="vs-row-detail vs-box-sub-table padding-left-1">
+                                                        <div class="vs-loading" ng-show="loadingDetail">
+                                                            <div class="showbox">
+                                                                <div class="loader">
+                                                                    <svg class="circular" viewBox="25 25 50 50">
+                                                                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid-x grid-padding-x">
+                                                            <div class="medium-3 cell middle-left">
+                                                                <i class="mdi mdi-account-card-details mdi-lg mdi-24px mdi-right"></i>
+                                                                <span class="vs-sub-table-title">No. KTP:&nbsp;</span>
+                                                                <span>{{ user_detail.ktp }}</span>
+                                                            </div>
+                                                            <div class="medium-3 cell middle-center">
+                                                                <i class="mdi mdi-twitter mdi-lg mdi-24px mdi-right"></i>
+                                                                <span class="vs-sub-table-title">Tgl. Lahir:&nbsp;</span>
+                                                                <span>{{ user_detail.birthdate | date: 'dd MMMM yyyy' }}</span>
+                                                            </div>
+                                                            <div class="medium-3 cell">
+                                                                <div ng-if="user_detail.gender == 'P'" class="middle-center">
+                                                                    <i class="mdi mdi-gender-female mdi-lg mdi-24px mdi-right"></i>
+                                                                    <span class="vs-sub-table-title">Jenis Kelamin:&nbsp;</span>
+                                                                    <span>Perempuan</span>
+                                                                </div>
+                                                                <div ng-if="user_detail.gender == 'L'" class="middle-center">
+                                                                    <i class="mdi mdi-gender-male mdi-lg mdi-24px mdi-right"></i>
+                                                                    <span class="vs-sub-table-title">Jenis Kelamin:&nbsp;</span>
+                                                                    <span>Laki-laki</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="medium-3 cell middle-center">
+                                                                <i class="mdi mdi-account mdi-lg mdi-24px mdi-right"></i>
+                                                                <span class="vs-sub-table-title">Username:&nbsp;</span>
+                                                                <span>{{ user_detail.email }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="data.length < 1">
+                                                    <td class="text-center" colspan="7">Maaf, data masih kosong</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="vs-box-page-footer">
+                                <div class="grid-x" ng-hide="loading">
+                                    <div class="small-6 cell align-self-middle">
+                                        <span>Total: {{ totalItems }}</span>
+                                    </div>
+                                    <div class="small-6 cell align-self-middle">
+                                        <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="/html/apps/master/users/userPagination.html"></dir-pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + f ]</td>
+                        <td>Kolom pencarian barang</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + t ]</td>
+                        <td>Tambah Data Baru</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<ul class="notification-list margin-left-0 menu vertical">
+    <li ng-repeat="data in min_stock" style="padding: 6px 12px; color: #333">
+        <div class="grid-x grid-padding-x" style="width: 100%">
+            <div class="medium-10 cell">
+                <div class="text-uppercase">{{ data.name }}</div>
+            </div>
+            <div class="medium-2 cell">
+                -&nbsp;<span class="font-bold">({{ data.qty_total }})</span>
+            </div>
+        </div>
+    </li>
+</ul>

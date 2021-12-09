@@ -1,0 +1,11 @@
+<ul class="md-pagination pagination text-right" role="navigation" aria-label="Pagination" ng-if="1 < pages.length">
+  <li ng-if="directionLinks">
+    <a ng-click="setCurrent(pagination.current - 1)" ng-class="{ disabled : pagination.current == 1 }">«</a>
+  </li>
+  <li ng-repeat="pageNumber in pages track by $index">
+    <a ng-click="setCurrent(pageNumber)" ng-class="{ current : pagination.current == pageNumber, disabled : pageNumber == '' }">{{ pageNumber }}</a>
+  </li>
+  <li ng-if="directionLinks">
+    <a ng-click="setCurrent(pagination.current + 1)" ng-class="{ disabled : pagination.current == pagination.last }">»</a>
+  </li>
+</ul>

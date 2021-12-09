@@ -1,0 +1,131 @@
+<div class="vs-page-transaction">
+    <div class="vs-page-body">
+        <!-- <form name="transactionSalesForm" ng-submit="createData(transactionSalesForm.$valid)" id="transactionSalesForm"> -->
+            <div class="grid-x">
+                <div class="large-12 cell align-self-middle">
+                    <div class="vs-box-page-content z-depth-1">
+                        <div class="vs-box-page-header">
+                            <div class="grid-x">
+                                <div class="small-12 medium-6 large-3 cell align-self-middle">
+                                    <div class="vs-page-title middle-left">
+                                        <img src="apps/img/icon/box.png" class="mdi-right">
+                                        <span class="vs-page-title font-bold">Retur Penjualan</span>
+                                    </div>
+                                </div>
+                                <div class="small-12 medium-6 large-9 cell align-self-right text-right">
+                                    {{ todayDate | date : "dd MMM y" }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-x">
+                            <div class="large-12 cell">
+                                <div class="vs-box-page-body">
+                                    <div class="vs-loading" ng-show="loading">
+                                        <div class="showbox">
+                                            <div class="loader">
+                                                <svg class="circular" viewBox="25 25 50 50">
+                                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-x grid-padding-x">
+                                        <div class="small-12 cell">
+                                            <autocompitem placeholder="Cari barang..." selection="selection" source="searchItem" class="margin-bottom-12px" ng-scanner-detect="scan_options" ng-model="barcodeAdd">
+                                            <input type="hidden" class="margin-bottom-12px" ng-model="invoice">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <div class="vs-sticky-table" style="height: 400px">
+                                                <table class="vs-table show-for-large">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center" width="56">No.</th>
+                                                            <th class="text-center">Nama Barang</th>
+                                                            <th width="100" class="text-center">Kuantitas</th>
+                                                            <th width="100" class="text-center">Satuan</th>
+                                                            <th width="160" class="text-center">Harga</th>
+                                                            <th width="160" class="text-center">Subtotal</th>
+                                                            <th width="50">&nbsp;</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="data-cart-sales">
+                                                        <tr ng-repeat="cart in data_cart">
+                                                            <td>{{ ($index + 1) }}.</td>
+                                                            <td>
+                                                                <div class="font-bold">
+                                                                    <span class="text-uppercase">{{ cart.name }}</span>
+                                                                    <input type="hidden" ng-model="cart.id">
+                                                                    <input type="hidden" ng-model="cart.name">
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <input type="text" ng-value="cart.qty | currency:'':0" class="text-right margin-bottom-0" ng-keyup="calcSubtotal(this)" id="cart-qty-{{ $index }}" ng-model="cart.qty" ui-number-mask="0" autocomplete="off" required>
+                                                            </td>
+                                                            <td>
+                                                                <div>
+                                                                    <select name="unit" ng-model="cart.options.unit" ng-change="selectUnit(elm, $index, cart.options.unit, cart.options.price_sell_per_box, cart.options.price_sell_per_strip, cart.options.price_sell_per_tablet)">
+                                                                        <option value="box" ng-if="cart.options.price_sell_per_box > 0">Box</option>
+                                                                        <option value="strip" ng-if="cart.options.price_sell_per_strip > 0">Strip</option>
+                                                                        <option value="tablet" ng-if="cart.options.price_sell_per_tablet > 0">Biji</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <input type="text" class="text-right margin-bottom-0" id="cart-price-{{ $index }}" ng-model="cart.price" ui-number-mask="0">
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <input type="text" class="text-right margin-bottom-0" id="cart-subtotal-{{ $index }}" ng-model="cart.subtotal" ui-number-mask="0">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a ng-click="cartRemove({rowId: cart.rowId})">
+                                                                    <i class="mdi mdi-delete"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-show="data_cart.length < 1">
+                                                            <td class="text-center" colspan="8">Maaf, data retur penjualan kosong.</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="large-12 cell text-right">
+                                <div class="padding-1">
+                                    <button class="button vs-flat-button btn-success margin-bottom-0" id="btn-save" ng-disabled="data_cart.length < 1" ng-click="createData()">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + f ]</td>
+                        <td>Kolom pencarian barang</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + s ]</td>
+                        <td>Proses</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

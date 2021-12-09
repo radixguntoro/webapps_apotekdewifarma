@@ -1,0 +1,42 @@
+// Login Style
+
+.vs-login-page,
+.vs-order-page,
+.vs-payment-confirmation-success-page,
+.vs-registration-page {
+    padding-top   : 36px;
+    padding-bottom: 36px;
+}
+
+.vs-box-login-form {
+    margin-top   : 16px;
+    margin-bottom: 16px;
+
+    .vs-login-header {
+        // background: $color-black;
+        padding       : 16px;
+        font-size     : 14px;
+        text-align    : center;
+        text-transform: uppercase;
+    }
+
+    .vs-login-body {
+        padding   : 16px;
+        background: $color-smoke;
+
+        .text-link {
+            font-size: 14px;
+        }
+    }
+}
+
+.vs-box-registration {
+    padding: 32px 16px;
+}
+
+.vs-bg-regis {
+    position : absolute;
+    left     : 50%;
+    bottom   : 0;
+    transform: translateX(-50%);
+}

@@ -1,0 +1,67 @@
+<div class="vs-page-unit">
+    <div class="vs-page-body">
+        <div class="grid-x grid-padding-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-2">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x grid-padding-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/edit.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Buat Satuan</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x grid-padding-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="grid-x grid-padding-x">
+                                    <div class="small-12 cell">
+                                        <label for="">Nama Satuan</label>
+                                        <input type="text" placeholder="Nama...">
+                                    </div>
+                                    <div class="small-12 cell">
+                                        <label for="">Kuantitas</label>
+                                        <input type="text" placeholder="0" class="text-right">
+                                    </div>
+                                    <div class="small-6 cell">
+                                        <label for="">Status</label>
+                                        <div class="vs-box-radio">
+                                            <div class="grid-x">
+                                                <div class="small-6 medium-3 large-4 cell middle-left">
+                                                    <label class="radio">
+                                                        <input id="unit_status" type="radio" name="unit_status" ng-model="status" value="Y" hidden ng-checked="true">
+                                                        <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Parent
+                                                    </label>
+                                                </div>
+                                                <div class="small-6 medium-3 large-4 cell middle-left">
+                                                    <label class="radio">
+                                                        <input id="unit_status" type="radio" name="unit_status" ng-model="status" value="N" hidden>
+                                                        <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Child
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-6 cell">
+                                        <label for="">Relasi Unit</label>
+                                        <input type="text" placeholder="Relasi unit...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vs-box-page-footer">
+                        <div class="grid-x grid-padding-x">
+                            <div class="small-12 cell text-right">
+                                <button ui-sref="category-list" class="button vs-flat-button btn-smoke margin-bottom-0">Kembali</button>
+                                <button class="button vs-flat-button btn-success margin-bottom-0">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<div class="vs-page-rep-income-shift">
+    <div class="vs-page-body">
+        <div class="grid-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-1">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/graph.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Laporan Setoran per Shift</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x align-center">
+                                    <div class="small-3 cell margin-bottom-8px">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-12 cell">
+                                                <label for="">Tanggal</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-label"><i class="mdi mdi-calendar"></i></span>
+                                                    <input type="text" ui-date="dateReportOptions" name="dateReportStart" ng-model="report.datestart" placeholder="01-01-2018" autocomplete="off" id="inp-datestart">
+                                                </div>
+                                            </div>
+                                            <!-- <div class="small-12 cell">
+                                                <label for="">Tanggal Akhir</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-label"><i class="mdi mdi-calendar"></i></span>
+                                                    <input type="text" ui-date="dateReportOptions" name="dateReportEnd" ng-model="report.dateend" placeholder="31-01-2018" autocomplete="off">
+                                                </div>
+                                            </div> -->
+                                            <div class="small-12 cell font-bold text-right align-self-middle">
+                                                <button class="button vs-flat-button btn-secondary btn-small margin-top-12px" ng-click="filterData(this, report)">Cari</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="small-9 cell">
+                                        <table class="vs-table show-for-large">
+                                            <thead>
+                                                <tr style="background:#3f51b5">
+                                                    <th colspan="6" style="color: white; border: 1px solid #e0e0e0">Shift Pagi</th>
+                                                </tr>
+                                                <tr>
+                                                    <th width="48" class="text-center">No</th>
+                                                    <th width="100" class="text-center">Tanggal</th>
+                                                    <th class="text-center">Nama Kasir</th>
+                                                    <th width="200" class="text-center">Total Penjualan</th>
+                                                    <th width="200" class="text-center">Total Pendapatan</th>
+                                                    <th width="200" class="text-center">Selisih Kasir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="report_shift in data_morning">
+                                                    <td>{{ $index + 1}}.</td>
+                                                    <td>
+                                                        {{ report_shift.date | date : "dd MMM y" }}
+                                                    </td>
+                                                    <td class="text-center">{{ report_shift.first_name }} {{ report_shift.last_name }}</td>
+                                                    <td class="text-right">{{ report_shift.income_app | currency:'':0 }}</td>
+                                                    <td class="text-right">{{ report_shift.income_real | currency:'':0 }}</td>
+                                                    <td class="text-right">{{ report_shift.income_diff | currency:'':0 }}</td>
+                                                </tr>
+                                                <tr ng-show="!data_morning">
+                                                    <td colspan="6" class="text-center">Maaf, data masih kosong</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="vs-table show-for-large">
+                                            <thead>
+                                                <tr style="background:#e4c05c">
+                                                    <th colspan="6" style="color: white; border: 1px solid #e0e0e0">Shift Siang</th>
+                                                </tr>
+                                                <tr>
+                                                    <th width="48" class="text-center">No</th>
+                                                    <th width="100" class="text-center">Tanggal</th>
+                                                    <th class="text-center">Nama Kasir</th>
+                                                    <th width="200" class="text-center">Total Penjualan</th>
+                                                    <th width="200" class="text-center">Total Pendapatan</th>
+                                                    <th width="200" class="text-center">Selisih Kasir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="report_shift in data_evening">
+                                                    <td>{{ $index + 1}}.</td>
+                                                    <td>
+                                                        {{ report_shift.date | date : "dd MMM y" }}
+                                                    </td>
+                                                    <td class="text-center">{{ report_shift.first_name }} {{ report_shift.last_name }}</td>
+                                                    <td class="text-right">{{ report_shift.income_app | currency:'':0 }}</td>
+                                                    <td class="text-right">{{ report_shift.income_real | currency:'':0 }}</td>
+                                                    <td class="text-right">{{ report_shift.income_diff | currency:'':0 }}</td>
+                                                </tr>
+                                                <tr ng-show="!data_evening">
+                                                    <td colspan="6" class="text-center">Maaf, data masih kosong</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="vs-table show-for-large">
+                                            <thead>
+                                                <tr style="background:#e57e25">
+                                                    <th colspan="6" style="color: white; border: 1px solid #e0e0e0">Shift Sore</th>
+                                                </tr>
+                                                <tr>
+                                                    <th width="48" class="text-center">No</th>
+                                                    <th width="100" class="text-center">Tanggal</th>
+                                                    <th class="text-center">Nama Kasir</th>
+                                                    <th width="200" class="text-center">Total Penjualan</th>
+                                                    <th width="200" class="text-center">Total Pendapatan</th>
+                                                    <th width="200" class="text-center">Selisih Kasir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="report_shift in data_night">
+                                                    <td>{{ $index + 1}}.</td>
+                                                    <td>
+                                                        {{ report_shift.date | date : "dd MMM y" }}
+                                                    </td>
+                                                    <td class="text-center">{{ report_shift.first_name }} {{ report_shift.last_name }}</td>
+                                                    <td class="text-right">{{ report_shift.income_app | currency:'':0 }}</td>
+                                                    <td class="text-right">{{ report_shift.income_real | currency:'':0 }}</td>
+                                                    <td class="text-right">{{ report_shift.income_diff | currency:'':0 }}</td>
+                                                </tr>
+                                                <tr ng-show="!data_night">
+                                                    <td colspan="6" class="text-center">Maaf, data masih kosong</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + s ]</td>
+                        <td>Kolom Tanggal Awal</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + f ]</td>
+                        <td>Tombol Cari</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

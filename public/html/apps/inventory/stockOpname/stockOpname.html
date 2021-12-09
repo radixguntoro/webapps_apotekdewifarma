@@ -1,0 +1,147 @@
+<div class="vs-page-stock-opname">
+    <div class="vs-page-body">
+        <div class="grid-x">
+            <div class="large-12 cell align-self-middle">
+                <div class="vs-box-page-content z-depth-2">
+                    <div class="vs-box-page-header">
+                        <div class="grid-x">
+                            <div class="small-12 cell align-self-middle">
+                                <div class="vs-page-title middle-left">
+                                    <img src="apps/img/icon/stock-opname.png" class="mdi-right">
+                                    <span class="vs-page-title font-bold">Stock Opname</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="vs-box-page-body">
+                                <div class="grid-x grid-padding-x align-center">
+                                    <div class="small-12 cell margin-bottom-8px">
+                                        <div class="grid-x grid-padding-x">
+                                            <div class="small-12 cell align-self-middle">
+                                                <label for="">Cari Barang</label>
+                                                <autocompstock placeholder="Cari barang..." selection="selection" source="searchItem" class="margin-bottom-12px">
+                                                <input type="hidden" ng-model="stock_opname.code" disabled>
+                                                <input type="hidden" ng-model="stock_opname.date" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vs-loading" ng-show="loading">
+                                    <div class="showbox">
+                                        <div class="loader">
+                                            <svg class="circular" viewBox="25 25 50 50">
+                                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid-x grid-padding-x">
+                                    <div class="small-12 cell">
+                                        <table class="vs-table show-for-large">
+                                            <thead>
+                                                <tr>
+                                                    <th width="48">No</th>
+                                                    <th class="text-center">Nama Barang</th>
+                                                    <th width="120" class="text-center">Jumlah Sistem</th>
+                                                    <!-- <th width="150" class="text-center">Total Harga Sistem</th> -->
+                                                    <th width="120" class="text-center">Jumlah Fisik</th>
+                                                    <!-- <th width="150" class="text-center">Total Harga Fisik</th> -->
+                                                    <th width="140" class="text-center">Selisih Jumlah</th>
+                                                    <th width="150" class="text-center">Selisih Harga</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody dir-paginate="stock_opname in data | itemsPerPage:25" total-items="totalItems" current-page="pagination.current">
+                                                <tr>
+                                                    <td>{{ ($index + 1) + (pagination.current - 1) * 25}}.</td>
+                                                    <td class="text-uppercase">
+                                                        {{ stock_opname.name }}
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{ stock_opname.stock_in_system | currency:'':0}}
+                                                    </td>
+                                                    <!-- <td class="text-right">
+                                                        {{ stock_opname.price_sell_app | currency:'':0}}
+                                                    </td> -->
+                                                    <td class="text-right">
+                                                        <input type="text" class="text-right" ng-model="stock_opname.stock_in_physic" ui-number-mask="0" ng-keyup="validQty(this, event)" ng-disabled="stock_opname.status=='selesai'">
+                                                    </td>
+                                                    <!-- <td class="text-right">
+                                                        {{ stock_opname.stock_in_physic > 0 ? stock_opname.stock_in_physic * (stock_opname.price_sell_per_tablet > 0 ? stock_opname.price_sell_per_tablet : stock_opname.price_sell_per_bottle) : 0 | currency:'':0}}
+                                                        <input type="hidden" class="text-right" ng-model="stock_opname.price_sell_phx" ng-value="stock_opname.stock_in_physic > 0 ? stock_opname.stock_in_physic * (stock_opname.price_sell_per_tablet > 0 ? stock_opname.price_sell_per_tablet : stock_opname.price_sell_per_bottle) : 0">
+                                                    </td> -->
+                                                    <td class="text-right">
+                                                        {{ stock_opname.stock_in_physic > 0 ? stock_opname.stock_in_physic - stock_opname.stock_in_system : 0 | currency:'':0}}
+                                                        <input type="hidden" class="text-right" ng-model="stock_opname.stock_difference" ng-value=" stock_opname.stock_in_physic > 0 ? stock_opname.stock_in_physic - stock_opname.stock_in_system : 0 | currency:'':0">
+                                                    </td>
+                                                    <td class="text-right">
+                                                        {{ stock_opname.stock_in_physic > 0 ? (stock_opname.stock_in_physic * (stock_opname.price_sell_per_tablet > 0 ? stock_opname.price_sell_per_tablet : stock_opname.price_sell_per_bottle)) - stock_opname.price_sell_app : 0 | currency:'':0}}
+                                                        <input type="hidden" class="text-right" ng-model="stock_opname.price_sell_difference" ng-value=" stock_opname.stock_in_physic > 0 ? (stock_opname.stock_in_physic * (stock_opname.price_sell_per_tablet > 0 ? stock_opname.price_sell_per_tablet : stock_opname.price_sell_per_bottle)) - stock_opname.price_sell_app : 0 | currency:'':0">
+                                                    </td>
+                                                    <td class="text-center" width="50" style="padding: 8px 4px;">
+                                                        <button class="button vs-flat-button alert btn-square margin-bottom-0" ng-click="deleteStockOpname(stock_opname)"><i class="mdi mdi-delete mdi-18px"></i></button>
+                                                    </td>
+                                                    <!-- <td class="text-center" width="50" style="padding: 8px 4px;">
+                                                        <button class="button vs-flat-button btn-secondary btn-square margin-bottom-0" ng-click="editStockOpname(stock_opname)" ng-if="stock_opname.status=='selesai'"><i class="mdi mdi-pencil mdi-18px"></i></button>
+                                                        <button class="button vs-flat-button btn-success btn-square margin-bottom-0" ng-click="updateStockOpname(stock_opname)" ng-if="stock_opname.status=='proses'"><i class="mdi mdi-check-all mdi-18px"></i></button>
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                            <tbody ng-show="data.length < 1">
+                                                <tr>
+                                                    <td colspan="10" class="text-center">Maaf, data tidak ditemukan</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="small-12 cell text-right">
+                                        <button class="button vs-flat-button btn-success btn-square" ng-click="updateStockOpname(data)" ng-disabled="data.length < 1" id="btn-process">
+                                            Proses Semua
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vs-box-page-footer">
+                        <div class="grid-x" ng-hide="loading">
+                            <div class="small-6 cell align-self-middle">
+                                <span>Total: {{ totalItems }}</span>
+                            </div>
+                            <div class="small-6 cell align-self-middle">
+                                <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="/html/apps/inventory/stockOpname/stockOpnamePagination.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + f ]</td>
+                        <td>Kolom pencarian barang</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + s ]</td>
+                        <td>Proses Semua</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

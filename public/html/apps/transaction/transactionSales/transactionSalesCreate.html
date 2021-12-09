@@ -1,0 +1,470 @@
+<div class="vs-page-transaction" style="position:relative">
+    <div class="vs-page-body">
+        <!-- <form name="transactionSalesForm" ng-submit="createData(transactionSalesForm.$valid)" id="transactionSalesForm"> -->
+            <div class="grid-x">
+                <div class="large-12 cell align-self-middle">
+                    <div class="vs-box-page-content z-depth-1">
+                        <div class="vs-box-page-header">
+                            <div class="grid-x">
+                                <div class="small-12 medium-6 large-3 cell align-self-middle">
+                                    <div class="vs-page-title middle-left">
+                                        <img src="apps/img/icon/cashier.png" class="mdi-right">
+                                        <span class="vs-page-title font-bold">Transaksi Penjualan</span>
+                                    </div>
+                                </div>
+                                <div class="small-12 medium-6 large-9 cell align-self-right text-right">
+                                    {{ todayDate | date : "dd MMM y" }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-x">
+                            <div class="large-9 cell padding-right-0">
+                                <div class="vs-box-page-body">
+                                    <div class="vs-loading" ng-show="loading">
+                                        <div class="showbox">
+                                            <div class="loader">
+                                                <svg class="circular" viewBox="25 25 50 50">
+                                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-x grid-padding-x">
+                                        <div class="small-12 cell">
+                                            <autocompitem placeholder="Cari barang..." selection="selection" source="searchItem" class="margin-bottom-12px" ng-scanner-detect="scan_options" ng-model="barcodeAdd">
+                                            <input type="hidden" class="margin-bottom-12px" ng-model="invoice">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <div class="vs-sticky-table">
+                                                <table class="vs-table show-for-large">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="48">&nbsp;</th>
+                                                            <th class="text-center">Nama Barang</th>
+                                                            <th width="100" class="text-center">Kuantitas</th>
+                                                            <th width="82" class="text-center">Satuan</th>
+                                                            <th width="140" class="text-center">Harga</th>
+                                                            <th width="82" class="text-center">Diskon</th>
+                                                            <th width="140" class="text-center">Subtotal</th>
+                                                            <th width="50" class="box-delete" ng-show="check_delete == true">
+                                                                <div class="vs-box-checkbox hide">
+                                                                    <div class="checkbox checkbox-success">
+                                                                        <input id="check-delete" class="styled" type="checkbox" ng-click="checkDelete(check_delete); $event.stopPropagation();" ng-checked="check_delete">
+                                                                        <label for="check-delete" class="check-delete"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="data-cart-sales">
+                                                        <tr ng-repeat="cart in data_cart">
+                                                            <td>{{ ($index + 1) }}.</td>
+                                                            <td>
+                                                                <div class="font-bold">
+                                                                    <div class="text-uppercase">{{ cart.name }}</div>
+                                                                    <input type="hidden" ng-model="cart.id">
+                                                                    <input type="hidden" ng-model="cart.name">
+                                                                </div>
+                                                                <!-- <div>Tersedia:
+                                                                    <span ng-if="cart.price_sell_per_box > 0"><span class="font-bold">{{ cart.qty_in_box | currency:'':0}}</span> Box <span class="font-bold">&nbsp;|&nbsp;</span></span>
+                                                                    <span ng-if="cart.price_sell_per_strip > 0"><span class="font-bold">{{ cart.qty_in_strip | currency:'':0}}</span> Strip <span class="font-bold">&nbsp;|&nbsp;</span></span>
+                                                                    <span ng-if="cart.price_sell_per_tablet > 0"><span class="font-bold">{{ cart.qty_in_tablet | currency:'':0}}</span> Biji</span>
+                                                                </div> -->
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <input type="text" class="text-right margin-bottom-0" ng-keyup="calcQty(this)" id="cart-qty-{{ $index }}" ng-model="cart.qty" ui-number-mask="0" autocomplete="off" required>
+                                                            </td>
+                                                            <td>
+                                                                <div>
+                                                                    <select name="unit" ng-model="cart.unit" ng-change="selectUnit(elm, $index, cart.unit, cart.price_sell_per_box, cart.price_sell_per_strip, cart.price_sell_per_tablet)" style="height: 32px">
+                                                                        <option value="box" ng-if="cart.price_sell_per_box > 0">Box</option>
+                                                                        <option value="strip" ng-if="cart.price_sell_per_strip > 0">Strip</option>
+                                                                        <option value="tablet" ng-if="cart.price_sell_per_tablet > 0">Biji</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <input type="text" class="text-right margin-bottom-0 inp-transparent" id="cart-price-{{ $index }}" disabled ng-model="cart.price" ui-number-mask="0">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" class="text-right" ng-model="cart.discount" ng-keyup="calcDiscItem(this)" ui-percentage-mask="1" autocomplete="off" id="cart-disc-{{ $index }}">
+                                                            </td>
+                                                            <td class="text-right">
+                                                                <input type="text" class="text-right inp-transparent" disabled ng-model="cart.subtotal" ui-number-mask="0">
+                                                            </td>
+                                                            <td class="text-center box-delete" ng-show="check_delete == true">
+                                                                <button class="button vs-flat-button alert btn-small btn-square margin-bottom-0 btn-delete btn-icon" ng-click="getItemId(this, {row_id: cart.item_id})" id="modal-confirm-delete-tr-sales"><i class="mdi mdi-delete mdi-14px"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-show="data_cart.length < 1">
+                                                            <td class="text-center" colspan="9">Maaf, keranjang belanja kosong.</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="large-3 cell padding-left-0">
+                                <div class="box-payment vs-bg-smoke">
+                                    <div class="grid-x">
+                                        <div class="small-12 cell">
+                                            <label for="" class="font-bold">Total Harga</label>
+                                            <input type="text" class="text-right" disabled ng-model="tr_sales.total_price" ng-value="tr_sales.total_price | currency:'':0">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <label for="" class="font-bold">Diskon Harga</label>
+                                            <input type="text" class="text-right" ng-model="tr_sales.discprice" ng-keyup="calcDiscGrandTotal(this)" ui-number-mask="0" id="inp-disc-tunai" autocomplete="off">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <label for="" class="font-bold">Diskon Persen (%)</label>
+                                            <input type="text" class="text-right" ng-model="tr_sales.discount" ui-percentage-mask="1" ng-keyup="calcGrandTotal(this)" id="inp-disc-percent" autocomplete="off">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <hr class="margin-top-8px margin-bottom-8px">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <label for="" class="font-bold">Grand Total</label>
+                                            <h4 class="font-bold text-right margin-bottom-0">{{ tr_sales.grand_total | currency:'':0 }}</h4>
+                                            <input type="hidden" class="text-right font-bold" disabled ng-model="tr_sales.grand_total">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <label for="" class="font-bold">Total Bayar</label>
+                                            <input type="text" class="text-right" ng-model="tr_sales.payment" ng-keyup="calcBalanceTotal(this)" ui-number-mask="0" id="inp-balance" autocomplete="off">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <hr class="margin-top-8px margin-bottom-8px">
+                                        </div>
+                                        <div class="small-12 cell">
+                                            <label for="" class="font-bold">Total Kembali</label>
+                                            <h4 class="font-bold text-right margin-bottom-0">{{ tr_sales.balance | currency:'':0 }}</h4>
+                                            <input type="hidden" class="text-right" ng-model="tr_sales.balance">
+                                        </div>
+                                        <div class="small-12 cell text-right">
+                                            <hr style="margin: 0 0 16px">
+                                            <button class="button vs-flat-button btn-primary margin-bottom-0" id="btn-save-print" ng-disabled="tr_sales.payment < tr_sales.grand_total || tr_sales.grand_total < 1" ng-click="createPrintData()">Simpan & Cetak</button>
+                                            <button class="button vs-flat-button btn-success margin-bottom-0" id="btn-save" ng-disabled="tr_sales.payment < tr_sales.grand_total || tr_sales.grand_total < 1" ng-click="createData()">Simpan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+    <div class="vs-box-reveal">
+        <div class="reveal tiny vs-reveal" id="confirm-delete-tr-sales">
+            <h5><span style="color: #cc4b37" class="font-bold">Otorisasi Penghapusan Barang {{ $index }}.</span></h5>
+            <div class="grid-x">
+                <div class="small-12 cell">
+                    <hr class="margin-top-0">
+                </div>
+                <div class="small-12 cell">
+                    <label for="">Username</label>
+                    <input type="text" ng-model="tr_sales.username" class="inp-username">
+                </div>
+                <div class="small-12 cell">
+                    <label for="">Password</label>
+                    <input type="password" ng-model="tr_sales.password" class="inp-password">
+                </div>
+            </div>
+            <div class="grid-x">
+                <div class="small-12 cell">
+                    <hr>
+                </div>
+            </div>
+            <button ng-click="cartRemove(this, {username: tr_sales.username, password: tr_sales.password})" class="button vs-flat-button btn-success margin-bottom-0 float-right" data-close>Hapus Sekarang</button>
+            <button class="button vs-flat-button alert margin-bottom-0 float-right margin-right-8px" data-close>Batal</button>
+        </div>
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + f ]</td>
+                        <td>Kolom pencarian barang</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + s ]</td>
+                        <td>Simpan</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + c ]</td>
+                        <td>Simpan & Cetak</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + d ]</td>
+                        <td>Kolom diskon tunai</td>
+                    </tr>
+                    <tr>
+                        <td>[ ctrl + d ]</td>
+                        <td>Kolom diskon persen</td>
+                    </tr>
+                    <tr>
+                        <td>[ ctrl + b ]</td>
+                        <td>Kolom pembayaran</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="display-print content" id="new-print" ng-if="show == false">
+    <table class="table-print">
+        <tbody>
+            <tr>
+                <td colspan="3" style="padding: 12px 12px 0;" class="text-center">
+                    <h5 style="margin-bottom: 8px">Apotek "Dewi Farma"</h5>
+                    <p style="font-size: 13px !important; line-height: 16px" class="margin-bottom-0">Jl. Dukuh Kupang No. 14</p>
+					<p style="font-size: 13px !important; line-height: 16px" class="margin-bottom-0">Surabaya</p>
+                    <table class="subtable margin-bottom-0" style="margin-top:4px;">
+                        <tbody>
+                            <tr>
+                                <td class="text-left padding-left-0 padding-bottom-0" style="font-size: 12px;">
+                                    {{ invoice }}
+                                </td>
+                                <td class="text-right padding-right-0 padding-bottom-0" style="font-size: 12px;">
+                                    {{ todayDate | date : "dd-MM-y" }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr><td colspan="3" style="padding-top: 2px; padding-bottom:2px"><hr style="border-style: dashed; border-color: #1e1e1e" class="margin-0"></td></tr>
+            <tr ng-repeat="cart in data_cart">
+                <td class="padding-bottom-0 padding-top-0" style="padding-left: 12px; padding-right: 12px;" colspan="3">
+                    <div class="text-uppercase item-title" style="font-size: 11px !important;">
+                        {{ cart.name }}
+                    </div>
+                    <table class="subtable margin-bottom-0">
+                        <tbody>
+                            <tr>
+                                <td class="padding-top-0 padding-left-0 padding-bottom-0">
+                                    <span ng-if="cart.unit == 'strip'">Strip</span>
+                                    <span ng-if="cart.unit == 'box'">Box</span>
+                                    <span ng-if="cart.unit == 'tablet'">Tablet</span>
+                                </td>
+                                <td class="text-right padding-top-0 padding-bottom-0">
+                                    <span id="cart-price-{{ $index }}" disabled ng-model="cart.price" ui-number-mask="0">{{ cart.price | currency:'':0 }}</span>
+                                </td>
+                                <td class="text-right padding-top-0 padding-left-0 padding-right-0 padding-bottom-0" width="48">
+                                    <span>{{ cart.discount * 100 }}%</span>
+                                </td>
+                                <td class="text-right padding-top-0 padding-left-0 padding-right-0 padding-bottom-0" width="25">
+                                    <span id="cart-qty-{{ $index }}" ng-model="cart.qty" ui-number-mask="0">{{ cart.qty | currency:'':0 }}</span>
+                                </td>
+                                <td class="text-right padding-top-0 padding-right-0 padding-bottom-0" width="72" style="vertical-align: middle">
+                                    <span ng-model="cart.subtotal" ng-if="cart.discount > 0">{{ cart.qty * cart.price - ((cart.qty * cart.price) * cart.discount) | currency:'':0}}</span>
+                                    <span ng-model="cart.subtotal" ng-if="cart.discount == 0">{{ cart.qty * cart.price | currency:'':0 }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding-top: 2px; padding-bottom:2px">
+                    <hr class="margin-0" style="border-style: dashed; border-color: #1e1e1e">
+                </td>
+            </tr>
+            <tr>
+                <td width="125" class="padding-bottom-0 padding-right-0 padding-top-0" style="padding-left: 12px;">TOTAL HARGA</td>
+                <td width="5" class="padding-bottom-0 padding-left-0 padding-top-0">:</td>
+                <td class="text-right padding-bottom-0 padding-top-0 font-bold text-price" style="padding-right: 12px;">{{ tr_sales.total_price | currency:'':0 }}</td>
+            </tr>
+            <tr>
+                <td width="125" class="padding-bottom-0 padding-right-0 padding-top-0" style="padding-left: 12px;">POTONGAN</td>
+                <td width="5" class="padding-bottom-0 padding-left-0 padding-top-0">:</td>
+                <td class="text-right padding-bottom-0 padding-top-0 text-price" style="padding-right: 12px;">
+                    <span ng-if="tr_sales.discprice > 0">{{ tr_sales.discprice | currency:'':0 }}</span>
+                    <span ng-if="tr_sales.discount > 0">({{ tr_sales.discount * 100 }} %)&nbsp;&nbsp;&nbsp; {{ tr_sales.total_price * tr_sales.discount | currency:'':0 }}</span>
+                    <span ng-if="tr_sales.discount == 0 && tr_sales.discprice == 0">0</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding-top: 2px; padding-bottom:2px">
+                    <hr class="margin-0" style="border-style: dashed; border-color: #1e1e1e">
+                </td>
+            </tr>
+            <tr>
+                <td width="125" class="padding-bottom-0 padding-right-0 padding-top-0" style="padding-left: 12px;">TOTAL</td>
+                <td width="5" class="padding-bottom-0 padding-left-0 padding-top-0">:</td>
+                <td class="text-right padding-bottom-0 padding-top-0 font-bold text-price" style="padding-right: 12px;">{{ tr_sales.grand_total | currency:'':0 }}</td>
+            </tr>
+            <tr>
+                <td width="125" class="padding-right-0 padding-bottom-0 padding-top-0" style="padding-left: 12px;">TUNAI</td>
+                <td width="5" class="padding-left-0 padding-bottom-0 padding-top-0">:</td>
+                <td class="text-right padding-bottom-0 padding-top-0 text-price" style="padding-right: 12px;">{{ tr_sales.payment | currency:'':0 }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding-top: 2px; padding-bottom:2px">
+                    <hr class="margin-0" style="border-style: dashed; border-color: #1e1e1e">
+                </td>
+            </tr>
+            <tr>
+                <td width="125" style="padding-left: 12px;" class=" padding-top-0">KEMBALI</td>
+                <td width="5" class="padding-left-0 padding-top-0">:</td>
+                <td class="text-right padding-top-0" style="padding-right: 12px;">
+                    <h4 class="margin-bottom-0">{{ tr_sales.balance | currency:'':0 }}</h4>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-center padding-bottom-0 padding-top-0">
+                    <div class="text-uppercase">Semoga lekas sembuh</div>
+					<div class="text-uppercase">Terima Kasih</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- LAST PRINT -->
+<div class="display-print content" id="last-print" ng-if="show == true">
+    <table class="table-print">
+        <tbody>
+            <tr>
+                <td colspan="3" style="padding: 12px 12px 0;" class="text-center">
+                    <h5 style="margin-bottom: 8px">Apotek "Dewi Farma"</h5>
+                    <p style="font-size: 13px !important; line-height: 16px" class="margin-bottom-0">Jl. Dukuh Kupang No. 14</p>
+					<p style="font-size: 13px !important; line-height: 16px" class="margin-bottom-0">Surabaya</p>
+                    <table class="subtable margin-bottom-0" style="margin-top:4px;">
+                        <tbody>
+                            <tr>
+                                <td class="text-left padding-left-0 padding-bottom-0" style="font-size: 12px;">
+                                    {{ tr_sales_last.invoice }}
+                                </td>
+                                <td class="text-right padding-right-0 padding-bottom-0" style="font-size: 12px;">
+                                    {{ tr_sales_last.date | date : "dd-MM-y" }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr><td colspan="3" style="padding-top: 2px; padding-bottom:2px"><hr style="border-style: dashed; border-color: #1e1e1e" class="margin-0"></td></tr>
+            <tr ng-repeat="cart in data_cart_last">
+                <td class="padding-bottom-0 padding-top-0" style="padding-left: 12px; padding-right: 12px;" colspan="3">
+                    <div class="text-uppercase item-title" style="font-size: 11px !important;">
+                        {{ cart.name }}
+                    </div>
+                    <table class="subtable margin-bottom-0">
+                        <tbody>
+                            <tr>
+                                <td class="padding-top-0 padding-left-0 padding-bottom-0">
+                                    <span ng-if="cart.unit == 'strip'">Strip</span>
+                                    <span ng-if="cart.unit == 'box'">Box</span>
+                                    <span ng-if="cart.unit == 'tablet'">Tablet</span>
+                                </td>
+                                <td class="text-right padding-top-0 padding-bottom-0">
+                                    <span id="cart-price-{{ $index }}" disabled ng-model="cart.price" ui-number-mask="0">{{ cart.price | currency:'':0 }}</span>
+                                </td>
+                                <td class="text-right padding-top-0 padding-left-0 padding-right-0 padding-bottom-0" width="48">
+                                    <span>{{ cart.discount_item * 100 }}%</span>
+                                </td>
+                                <td class="text-right padding-top-0 padding-left-0 padding-right-0 padding-bottom-0" width="25">
+                                    <span id="cart-qty-{{ $index }}" ng-model="cart.qty" ui-number-mask="0">{{ cart.qty | currency:'':0 }}</span>
+                                </td>
+                                <td class="text-right padding-top-0 padding-right-0 padding-bottom-0" width="72" style="vertical-align: middle">
+                                    <span ng-model="cart.subtotal" ng-if="cart.discount > 0">{{ cart.qty * cart.price - ((cart.qty * cart.price) * cart.discount) | currency:'':0}}</span>
+                                    <span ng-model="cart.subtotal" ng-if="cart.discount == 0">{{ cart.qty * cart.price | currency:'':0 }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding-top: 2px; padding-bottom:2px">
+                    <hr class="margin-0" style="border-style: dashed; border-color: #1e1e1e">
+                </td>
+            </tr>
+            <tr>
+                <td width="125" class="padding-bottom-0 padding-right-0 padding-top-0" style="padding-left: 12px;">TOTAL HARGA</td>
+                <td width="5" class="padding-bottom-0 padding-left-0 padding-top-0">:</td>
+                <td class="text-right padding-bottom-0 padding-top-0 font-bold text-price" style="padding-right: 12px;">{{ tr_sales_last.total_price | currency:'':0 }}</td>
+            </tr>
+            <tr>
+                <td width="125" class="padding-bottom-0 padding-right-0 padding-top-0" style="padding-left: 12px;">POTONGAN</td>
+                <td width="5" class="padding-bottom-0 padding-left-0 padding-top-0">:</td>
+                <td class="text-right padding-bottom-0 padding-top-0 text-price" style="padding-right: 12px;">
+                    <span ng-if="tr_sales_last.discprice > 0">{{ tr_sales_last.discprice | currency:'':0 }}</span>
+                    <span ng-if="tr_sales_last.discount > 0">({{ tr_sales_last.discount * 100 }} %)&nbsp;&nbsp;&nbsp; {{ tr_sales_last.total_price * tr_sales_last.discount | currency:'':0 }}</span>
+                    <span ng-if="tr_sales_last.discount == 0 && tr_sales_last.discprice == 0">0</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding-top: 2px; padding-bottom:2px">
+                    <hr class="margin-0" style="border-style: dashed; border-color: #1e1e1e">
+                </td>
+            </tr>
+            <tr>
+                <td width="125" class="padding-bottom-0 padding-right-0 padding-top-0" style="padding-left: 12px;">TOTAL</td>
+                <td width="5" class="padding-bottom-0 padding-left-0 padding-top-0">:</td>
+                <td class="text-right padding-bottom-0 padding-top-0 font-bold text-price" style="padding-right: 12px;">{{ tr_sales_last.grand_total | currency:'':0 }}</td>
+            </tr>
+            <tr>
+                <td width="125" class="padding-right-0 padding-bottom-0 padding-top-0" style="padding-left: 12px;">TUNAI</td>
+                <td width="5" class="padding-left-0 padding-bottom-0 padding-top-0">:</td>
+                <td class="text-right padding-bottom-0 padding-top-0 text-price" style="padding-right: 12px;">{{ tr_sales_last.payment | currency:'':0 }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="padding-top: 2px; padding-bottom:2px">
+                    <hr class="margin-0" style="border-style: dashed; border-color: #1e1e1e">
+                </td>
+            </tr>
+            <tr>
+                <td width="125" style="padding-left: 12px;" class=" padding-top-0">KEMBALI</td>
+                <td width="5" class="padding-left-0 padding-top-0">:</td>
+                <td class="text-right padding-top-0" style="padding-right: 12px;">
+                    <h4 class="margin-bottom-0">{{ tr_sales_last.balance | currency:'':0 }}</h4>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-center padding-bottom-0 padding-top-0">
+                    <div class="text-uppercase">Semoga lekas sembuh</div>
+					<div class="text-uppercase">Terima Kasih</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<style type="text/css">
+    .vs-box-reveal {
+        background: rgba(0,0,0,0.7);
+        width: 100%;
+        height: 104%;
+        position: absolute;
+        top: -12px;
+        z-index: 99;
+        display: none;
+    }
+
+    .vs-reveal {
+        position: absolute;
+        left: 50% !important;
+        transform: translateX(-50%);
+        display: block;
+        visibility: visible;
+    }
+    .vs-show {
+        display:block;
+    }
+
+    .ui-menu-item a:hover {
+        color: white !important;
+    }
+</style>

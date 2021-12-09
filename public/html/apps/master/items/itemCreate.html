@@ -1,0 +1,191 @@
+<div class="vs-page-item">
+    <div class="vs-page-body">
+        <!-- <form name="itemForm" ng-submit="createData(itemForm.$valid)" id="itemForm"> -->
+            <div class="grid-x">
+                <div class="large-12 cell align-self-middle">
+                    <div class="vs-box-page-content z-depth-1">
+                        <div class="vs-box-page-header">
+                            <div class="grid-x">
+                                <div class="small-12 cell align-self-middle">
+                                    <div class="vs-page-title middle-left">
+                                        <img src="apps/img/icon/create.png" class="mdi-right">
+                                        <span class="vs-page-title font-bold">Buat Barang</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-x">
+                            <div class="large-12 cell">
+                                <div class="vs-box-page-body">
+                                    <div class="vs-loading" ng-show="loading">
+                                        <div class="showbox">
+                                            <div class="loader">
+                                                <svg class="circular" viewBox="25 25 50 50">
+                                                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-x grid-padding-x">
+                                        <div class="large-4 cell">
+                                            <div class="grid-x grid-padding-x">
+                                                <div class="small-6 cell">
+                                                    <label for="">Barcode Box</label>
+                                                    <input type="text" placeholder="Kode barcode..." ng-model="item.barcode_box" id="barcode-box">
+                                                </div>
+                                                <div class="small-6 cell">
+                                                    <label for="">Barcode Strip</label>
+                                                    <input type="text" placeholder="Kode barcode..." ng-model="item.barcode_strip" id="barcode-strip">
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Nama Barang</label>
+                                                    <input type="text" placeholder="Nama barang..." ng-model="item.name" required>
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Catatan</label>
+                                                    <textarea name="name" cols="80" placeholder="Deskripsi..." style="height: 101px" ng-model="item.note"></textarea>
+                                                </div>
+                                                <div class="small-12 cell">
+                                                    <label for="">Status</label>
+                                                    <div class="vs-box-radio">
+                                                        <div class="grid-x">
+                                                            <div class="small-6 cell middle-left">
+                                                                <label class="radio">
+                                                                    <input id="active" type="radio" name="status" ng-model="status" value="A" hidden ng-checked="true">
+                                                                    <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Aktif
+                                                                </label>
+                                                            </div>
+                                                            <div class="small-6 cell middle-left">
+                                                                <label class="radio">
+                                                                    <input id="nonactive" type="radio" name="status" ng-model="status" value="N" hidden>
+                                                                    <span class="outer"><span class="inner"></span></span>&nbsp;&nbsp;Tidak Aktif
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="large-8 cell">
+                                            <div class="grid-x grid-padding-x">
+                                                <div class="medium-3 cell">
+                                                    <div class="grid-x grid-padding-x">
+                                                        <div class="small-12 cell">
+                                                            <label for="">Kuantitas (dalam Box)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.qty_in_box" ui-number-mask="0" ng-keyup="validQtyInBox(this, event)">
+                                                        </div>
+                                                        <div class="small-12 cell">
+                                                            <label for="">Kuantitas (dalam Strip)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.qty_in_strip" ui-number-mask="0" ng-keyup="validQtyInStrip(this, event)">
+                                                        </div>
+                                                        <div class="small-12 cell">
+                                                            <label for="">Kuantitas (dalam Biji)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.qty_in_tablet" ui-number-mask="0" ng-keyup="calcQtyTotal(this, event)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="medium-3 cell">
+                                                    <div class="grid-x grid-padding-x">
+                                                        <div class="small-12 cell">
+                                                            <label for="">Harga Beli (per Box)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.price_purchase_per_box" ui-number-mask="0" ng-keyup="calcPurchaseStripTablet(this, event)">
+                                                        </div>
+                                                        <div class="small-12 cell">
+                                                            <label for="">Harga Beli (per Strip)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.price_purchase_per_strip" ng-value="item.price_purchase_per_strip | currency:'':0" ui-number-mask="0" ng-keyup="validPricePurchaseStrip(this, event)">
+                                                        </div>
+                                                        <div class="small-12 cell">
+                                                            <label for="">Harga Beli (per Biji)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.price_purchase_per_tablet" ng-value="item.price_purchase_per_tablet | currency:'':0" ui-number-mask="0" ng-keyup="validPricePurchaseTablet(this, event)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="medium-3 cell">
+                                                    <div class="grid-x grid-padding-x">
+                                                        <div class="small-12 cell">
+                                                            <label for="">Keuntungan (% per Box)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.percent_profit_per_box" ui-percentage-mask="1" ng-keyup="calcProfitBox(this, event)">
+                                                        </div>
+                                                        <div class="small-12 cell">
+                                                            <label for="">Keuntungan (% per Strip)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.percent_profit_per_strip" ui-percentage-mask="1" ng-keyup="calcProfitStrip(this, event)">
+                                                        </div>
+                                                        <div class="small-12 cell">
+                                                            <label for="">Keuntungan (% per Biji)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.percent_profit_per_tablet" ui-percentage-mask="1" ng-keyup="calcProfitTablet(this, event)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="medium-3 cell">
+                                                    <div class="grid-x grid-padding-x">
+                                                        <div class="small-12 cell">
+                                                            <label for="">Harga Jual (per Box)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.price_sell_per_box" ui-number-mask="0" ng-keyup="calcSellStripTablet(this, event)">
+                                                        </div>
+                                                        <div class="small-12 cell">
+                                                            <label for="">Harga Jual (per Strip)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.price_sell_per_strip" ng-value="item.price_sell_per_strip | currency:'':0" ui-number-mask="0" ng-keyup="validPriceSellStrip(this, event)">
+                                                        </div>
+                                                        <div class="small-12 cell">
+                                                            <label for="">Harga Jual (per Biji)</label>
+                                                            <input type="text" placeholder="0" class="text-right" ng-model="item.price_sell_per_tablet" ng-value="item.price_sell_per_tablet | currency:'':0" ui-number-mask="0" ng-keyup="validPriceSellTablet(this, event)">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="medium-12 cell">
+                                                    <label for="">Minimum Kuantitas</label>
+                                                    <input type="text" placeholder="0" class="text-right" ng-model="item.qty_min" ui-number-mask="0">
+                                                </div>
+                                                <div class="medium-12 cell" ng-if="user_id == 99 || user_id == 0">
+                                                    <label for="">Jumlah Stok</label>
+                                                    <input type="text" placeholder="0" class="text-right" ng-model="item.qty_total" ng-value="item.qty_total | currency:'':0" ui-number-mask="0" ng-keyup="validQtyTotal(this, event)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vs-box-page-footer">
+                            <div class="grid-x">
+                                <div class="small-12 cell text-right">
+                                    <button ui-sref="item-list" class="button vs-flat-button btn-smoke margin-bottom-0 margin-right-8px">Kembali</button>
+                                    <button ng-click="createData()" class="button vs-flat-button btn-success margin-bottom-0" ng-disabled="item.name ==null" id="btn-save">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </form> -->
+    </div>
+</div>
+<a ng-click="helpPanel(helpShow); $event.stopPropagation();" class="hide" id="btn-help">Tes</a>
+<div ng-show="helpShow" class="vs-box-help z-depth-1">
+    <div class="grid-x grid-padding-x">
+        <div class="small-12 cell" ng-include="'/html/base/hotkeys.html'"></div>
+        <div class="small-12 cell">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="3"><h5 class="font-bold margin-0">HOTKEYS FORM</h5></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="118">[ alt + d ]</td>
+                        <td>Kolom Barcode Strip</td>
+                    </tr>
+                    <tr>
+                        <td>[ ctrl + d ]</td>
+                        <td>Kolom Barcode Box</td>
+                    </tr>
+                    <tr>
+                        <td>[ alt + s ]</td>
+                        <td>Simpan</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

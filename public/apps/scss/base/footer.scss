@@ -1,0 +1,177 @@
+/*FOOTER*/
+.vs-box-social {
+    margin         : 0;
+    list-style-type: none;
+    width          : 100%;
+    @include phone {
+        -webkit-box-pack: center !important;
+        -ms-flex-pack   : center !important;
+        justify-content : center !important;
+        margin-bottom   : 8px;
+    }
+
+    li {
+        padding-top   : 4px;
+        padding-bottom: 4px;
+        padding-right : 8px;
+        @include phone {
+            padding-right: 8px;
+            padding-left : 8px;
+        }
+
+        a {
+            .vs-social-media {
+                display                : -webkit-flex;
+                display                : flex;
+                -webkit-justify-content: center;
+                justify-content        : center;
+                -webkit-align-items    : center;
+                align-items            : center;
+                width                  : 35px;
+                height                 : 35px;
+                border-radius          : 50%;
+                background             : $black;
+                @include phone {
+                    width : 35px;
+                    height: 35px;
+                }
+
+                i.mdi {
+                    // margin-top: 50%;
+                    color     : white;
+                    transition: all 250ms;
+
+                    &:before {
+                        font-size: 24px;
+                    }
+                    @include phone {
+                        // margin-top: 40%;
+                        // transform: translateY(-40%);
+                        font-size : 20px;
+                        transition: all 250ms;
+                    }
+                }
+            }
+
+            &:hover {
+                .vs-social-media {
+                    i.mdi {
+                        // margin-top: 60%;
+                        // transform: translateY(-40%);
+                        transition: all 250ms;
+
+                        &:before {
+                            font-size: 24px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.vs-footer {
+    position: relative;
+
+    .vs-footer-top {
+        width         : 100%;
+        background    : darken($color-smoke, 5%);
+        padding-top   : 48px;
+        padding-bottom: 36px;
+        color         : $color-black;
+        @include phone {
+            padding-top   : 24px;
+            padding-bottom: 24px;
+        }
+
+        h6 {
+            font-weight  : bold;
+            font-family  : 'MontserratBold', sans-serif;
+            margin-bottom: 16px;
+        }
+
+        ul.menu.vertical {
+            margin-top : 8px;
+            margin-left: 0;
+
+            li {
+                a {
+                    font-size: 14px;
+                    padding  : 8px 0;
+                    @include phone {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
+        ul.vs-social-icon {
+            li {
+                a {
+                    padding: 2px 0 !important;
+                }
+            }
+        }
+    }
+
+    .vs-footer-middle {
+        background: $color-black;
+        width     : 100%;
+        padding   : 50px;
+
+        h2 {
+            margin-bottom: 20px;
+        }
+    }
+
+    .vs-footer-bottom {
+        width     : 100%;
+        background: $color-black;
+        padding   : 16px 0;
+        font-size : 14px;
+
+        .vs-copyright {
+            text-align: center;
+            @include phone {
+                text-align: center;
+                font-size : 12px !important;
+            }
+        }
+        @include phone {
+            padding: 10px 0;
+        }
+    }
+}
+
+.vs-copyright {
+    color: white;
+
+    span {
+        color: white;
+    }
+}
+
+.vs-icon-bank {
+    padding: 8px;
+    border : 1px solid $color-grey;
+}
+
+ul.vs-shipp-icon {
+    margin-top: 24px;
+
+    li {
+        padding-right: 8px;
+        margin-bottom: 8px;
+    }
+}
+
+ul.vs-social-icon {
+    li {
+        a {
+            @include phone {
+                padding-top   : 0 !important;
+                padding-bottom: 0 !important;
+            }
+        }
+    }
+}
